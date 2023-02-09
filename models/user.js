@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    roleId: {
+    role: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserRole",
         required: true

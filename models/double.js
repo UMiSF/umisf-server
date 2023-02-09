@@ -1,32 +1,26 @@
 const mongoose = require('mongoose');
 
 const doubleSchema = mongoose.Schema({
-    id: {
-        type: String,
-        required: true
-    },
-    ageGroupId: {
+    ageGroup: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "AgeGroup",
         required: true
     },
-    playerOneId: {
+    playerOne: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Player",
         required: true
     },
-    playerTwoId: {
+    playerTwo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Player",
         required: true
     },
-    paymentMethod: [{
-        methodId: {
+    paymentMethod: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "PaymentMethod",
             required: true
-        }
-    }],
+    },
     hasPaymentDone: {
         type: Boolean,
         required: true

@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const captainSchema = mongoose.Schema({
-    id: {
-        type: Number,
-        required: true
-    },
     firstName: {
         type: String,
         required: true

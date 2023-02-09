@@ -1,41 +1,33 @@
 const mongoose = require('mongoose');
 
 const tournementSchema = mongoose.Schema({
-    id: {
-        type: String,
-        required: true
-    },
     year: {
         type: Number,
         required: true
     },
     captains: [{
-        menCaptainId: {
+        menCaptain: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Captain",
             required: true
         },
-        menViceCaptainId: {
+        menViceCaptain: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Captain",
             required: true
         },
-        womenCaptainId: {
+        womenCaptain: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Captain",
             required: true
         },
-        womenViceCaptainId: {
+        womenViceCaptain: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Captain",
             required: true
         }
     }],
     pictures: [{
-        pictureId: {
-            type: Number,
-            required: true
-        },
         description: {
             type: String
         },
@@ -45,10 +37,6 @@ const tournementSchema = mongoose.Schema({
         }
     }],
     flyers: [{
-        flyerId: {
-            type: Number,
-            required: true
-        },
         description: {
             type: String
         },

@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const playerSchema = mongoose.Schema({
-    playerId: {
-        type: String,
-        required: true
-    },
     firstName: {
         type: String,
         required: true
