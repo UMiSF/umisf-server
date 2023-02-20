@@ -1,0 +1,13 @@
+// matchForDraw -> next match ID
+// matchForDraw to matchResult....... relation
+// matchForDraw should be changed to handle all single,double,team matches
+// matchForDraw -> add whether a single,double or a team match and change the other fields accordingly
+
+// Remove University and company round 
+
+// abstract matchResultCompany and university to teamRound
+    // don't be confused with existing comanyRound and universityRound with the new TeamRound to be added. The name 'teamRound' was suggested since it depcits how a team match goes
+
+// company and univeristy can be same as team
+
+// player -> phone number required, email not required, university captain's number will be assigned to all players, past performance not required
