@@ -11,10 +11,10 @@ const companySchema = mongoose.Schema({
         required: true
     }],
     paymentMethod: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "PaymentMethod",
-        required: true
-    },
+        type: String,
+        required: true,
+        enum: ['onsite','bankTransfer']
+      },
     hasPaymentDone: {
         type: Boolean,
         required: true
@@ -24,7 +24,6 @@ const companySchema = mongoose.Schema({
     },
     type: {
         type: String,
-        required: true
     }
 });
 
