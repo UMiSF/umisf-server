@@ -17,37 +17,126 @@ const teamRoundSchema = mongoose.Schema({
   matchNumber: {
     type: Number,
   },
-  singleOne: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "MatchResult",
+  matchType: {
+    type: String,
     required: true,
+    enum: ["Men", "Women"],
+  },
+  teamOne: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "matchCategory",
+    required: true,
+  },
+  teamTwo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "matchCategory",
+    required: true,
+  },
+  singleOne: {
+    teamOneSingle: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Single",
+      required: true,
+    },
+    teamTwoSingle: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Single",
+      required: true,
+    },
+    result: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "MatchResult",
+      required: true,
+    },
   },
   singleTwo: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "MatchResult",
-    required: true,
+    teamOneSingle: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Single",
+      required: true,
+    },
+    teamTwoSingle: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Single",
+      required: true,
+    },
+    result: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "MatchResult",
+      required: true,
+    },
   },
   singleThree: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "MatchResult",
-    required: true,
+    teamOneSingle: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Single",
+      required: true,
+    },
+    teamTwoSingle: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Single",
+      required: true,
+    },
+    result: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "MatchResult",
+      required: true,
+    },
   },
   doubleOne: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "MatchResult",
-    required: true,
+    teamOneDouble: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Double",
+      required: true,
+    },
+    teamTwoDouble: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Double",
+      required: true,
+    },
+    result: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "MatchResult",
+      required: true,
+    },
   },
   doubleTwo: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "MatchResult",
+    teamOneDouble: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Double",
+      required: true,
+    },
+    teamTwoDouble: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Double",
+      required: true,
+    },
+    result: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "MatchResult",
+      required: true,
+    },
+  },
+  matchRound: {
+    type: String,
     required: true,
+    enum: [
+      "firstRound",
+      "secondRound",
+      "thirdRound",
+      "fourthRound",
+      "preQuaterFinal",
+      "quaterFinal",
+      "semiFinal",
+      "final",
+    ],
   },
   winner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "playerTypes",
+    ref: "matchCategory",
     required: true,
   },
-  playerTypes: {
+  matchCategory: {
     type: String,
     required: true,
     enum: ["University", "Company"],
@@ -60,7 +149,7 @@ const teamRoundSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["notStarted", "ongoing", "finished"],
+    enum: ["Not started", "Sheduled", "Ongoing", "Finished"],
   },
   court: {
     type: String,

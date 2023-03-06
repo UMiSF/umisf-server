@@ -8,7 +8,7 @@ const subTournementSchema = mongoose.Schema({
   },
   matchType: {
     type: String,
-    enum: ["girls'", "boys'", "mix"],
+    enum: ["Girls", "Boys","Men","Women", "Mix"], 
   },
   drawArrayForSchools: [
     {

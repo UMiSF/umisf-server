@@ -15,7 +15,7 @@ const companySchema = mongoose.Schema({
   paymentMethod: {
     type: String,
     required: true,
-    enum: ["onsite", "bankTransfer"],
+    enum: ["On-site", "Bank Transfer"],
   },
   hasPaymentDone: {
     type: Boolean,

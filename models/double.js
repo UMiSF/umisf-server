@@ -9,7 +9,7 @@ const doubleSchema = mongoose.Schema({
   matchType: {
     type: String,
     required: true,
-    enum: ["girls'","boys'",'mix']
+    enum: ["Girls","Boys","Men","Women",'Mix']
   },
   player: {
     type: mongoose.Schema.Types.ObjectId,
@@ -24,7 +24,7 @@ const doubleSchema = mongoose.Schema({
   paymentMethod: {
     type: String,
     required: true,
-    enum: ['onsite','bankTransfer']
+    enum: ['On-site','Bank Transfer']
   },
   paymentConfirmed: {
     type: Boolean

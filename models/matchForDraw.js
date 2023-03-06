@@ -31,7 +31,7 @@ const matchForDrawSchema = mongoose.Schema({
   matchType: {
     type: String,
     required: true,
-    enum: ["boys", "girls"],
+    enum: ["Boys", "Girls"],
   },
   groupNumber: {
     type: Number,
@@ -66,7 +66,7 @@ const matchForDrawSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["notStarted", "ongoing", "finished"],
+    enum: ["Not started","Sheduled", "Ongoing", "Finished"],
   },
   court: {
     type: String,
