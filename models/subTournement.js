@@ -10,16 +10,18 @@ const subTournementSchema = mongoose.Schema({
     type: String,
     enum: ["girls'", "boys'", "mix"],
   },
-  drawArray: [
+  drawArrayForSchools: [
     {
-      draw: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "MatchForDraw",
-        required: true,
-      },
-      result: {
-        type: Number,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "MatchForDraw",
+      required: true,
+    },
+  ],
+  drawArrayForTeams: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "teamRounds",
+      required: true,
     },
   ],
   doubles: [
