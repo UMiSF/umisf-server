@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const matchForDrawSchema = mongoose.Schema({
+  isTeam: {
+    type: Boolean,
+    default: false,
+  },
   matchResult: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "MatchResult",
@@ -27,14 +31,7 @@ const matchForDrawSchema = mongoose.Schema({
   matchType: {
     type: String,
     required: true,
-    enum: [
-      "boys'Singles",
-      "boys'Doubles",
-      "girls'Singles",
-      "girls'Doubles",
-      "university",
-      "company",
-    ],
+    enum: ["boys", "girls"],
   },
   groupNumber: {
     type: Number,
@@ -61,8 +58,11 @@ const matchForDrawSchema = mongoose.Schema({
     required: true,
     enum: ["Single", "Double"],
   },
-  dateTime: {
-    type: Date,
+  scheduledDate: {
+    type: String,
+  },
+  scheduledTime: {
+    type: String,
   },
   status: {
     type: String,

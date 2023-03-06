@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const teamRoundSchema = mongoose.Schema({
+  isTeam: {
+    type: Boolean,
+    default: true,
+  },
   groupNumber: {
     type: Number,
   },
@@ -48,8 +52,11 @@ const teamRoundSchema = mongoose.Schema({
     required: true,
     enum: ["University", "Company"],
   },
-  dateTime: {
-    type: Date,
+  scheduledDate: {
+    type: String,
+  },
+  scheduledTime: {
+    type: String,
   },
   status: {
     type: String,
