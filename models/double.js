@@ -6,17 +6,17 @@ const doubleSchema = mongoose.Schema({
     ref: "AgeGroup",
     required: true,
   },
-  type: {
+  matchType: {
     type: String,
     required: true,
-    enum: ['men','women','mix']
+    enum: ["girls'","boys'",'mix']
   },
-  playerOne: {
+  player: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Player",
     required: true,
   },
-  playerTwo: {
+  playerPartner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Player",
     required: true,
@@ -35,6 +35,11 @@ const doubleSchema = mongoose.Schema({
   },
   paymentSlip: {
     type: String,
+  },
+  paymentApprover: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 

@@ -6,10 +6,10 @@ const singleSchema = mongoose.Schema({
         ref: "AgeGroup",
         required: true
   },
-  type: {
+  matchType: {
     type: String,
     required: true,
-    enum: ['men','women','mix']
+    enum: ["girls'","boys'",'mix']
   },
   player: {
     type: mongoose.Schema.Types.ObjectId,
@@ -30,6 +30,11 @@ const singleSchema = mongoose.Schema({
   },
   paymentSlip: {
     type: String,
+  },
+  paymentApprover: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 

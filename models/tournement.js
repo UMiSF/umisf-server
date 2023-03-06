@@ -5,30 +5,6 @@ const tournementSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  captains: [
-    {
-      menCaptain: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
-        required: true,
-      },
-      menViceCaptain: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
-        required: true,
-      },
-      womenCaptain: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
-        required: true,
-      },
-      womenViceCaptain: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
-        required: true,
-      },
-    },
-  ],
   pictures: [
     {
       description: {
@@ -51,6 +27,13 @@ const tournementSchema = mongoose.Schema({
       },
     },
   ],
+  subTournaments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "SubTournament",
+      required: true,
+    },
+  ],
   tShirtFront: {
     type: String,
     required: true,
@@ -62,6 +45,9 @@ const tournementSchema = mongoose.Schema({
   startingDate: {
     type: Date,
     required: true,
+  },
+  finishingDate: {
+    type: Date,
   },
   description: {
     type: String,

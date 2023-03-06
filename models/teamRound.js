@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 
 const teamRoundSchema = mongoose.Schema({
+  groupNumber: {
+    type: Number,
+  },
+  opponentGroupNumber: {
+    type: Number,
+  },
+  nextMatchNumber: {
+    type: Number,
+  },
+  matchNumber: {
+    type: Number,
+  },
   singleOne: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "MatchResult",
@@ -34,7 +46,20 @@ const teamRoundSchema = mongoose.Schema({
   playerTypes: {
     type: String,
     required: true,
-    enum: ['Player', 'Team']
+    enum: ["University", "Company"],
+  },
+  dateTime: {
+    type: Date,
+  },
+  status: {
+    type: String,
+    enum: ["notStarted", "ongoing", "finished"],
+  },
+  court: {
+    type: String,
+  },
+  stadium: {
+    type: String,
   },
   umpire: {
     type: mongoose.Schema.Types.ObjectId,
@@ -42,7 +67,4 @@ const teamRoundSchema = mongoose.Schema({
     required: true,
   },
 });
-exports.MatchResultCompany = mongoose.model(
-  "TeamRound",
-  teamRoundSchema
-);
+exports.MatchResultCompany = mongoose.model("TeamRound", teamRoundSchema);

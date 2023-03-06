@@ -26,6 +26,10 @@ const captainSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  year: {
+    type: Date,
+    required: true,
+  },
 });
 
 exports.Captain = mongoose.model("Captain", captainSchema);

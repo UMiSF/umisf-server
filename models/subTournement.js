@@ -6,10 +6,9 @@ const subTournementSchema = mongoose.Schema({
     ref: "AgeGroup",
     required: true,
   },
-  type: {
+  matchType: {
     type: String,
-    required: true,
-    enum: ["men", "women","mix"],
+    enum: ["girls'", "boys'", "mix"],
   },
   drawArray: [
     {
@@ -20,7 +19,6 @@ const subTournementSchema = mongoose.Schema({
       },
       result: {
         type: Number,
-        required: true,
       },
     },
   ],
@@ -28,44 +26,37 @@ const subTournementSchema = mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Double",
-      required: true,
     },
   ],
   singles: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Single",
-      required: true,
     },
   ],
   universities: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "University",
-      required: true,
     },
   ],
   companies: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
-      required: true,
     },
   ],
   champion: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Player",
-    required: true,
   },
   firstRunnerUp: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Player",
-    required: true,
   },
   secondRunnerUp: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Player",
-    required: true,
   },
 });
 

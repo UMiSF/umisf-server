@@ -15,8 +15,13 @@ const matchResultSchema = mongoose.Schema({
   ],
   winner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Player",
+    ref: "matchType",
     required: true,
+  },
+  matchType: {
+    type: String,
+    required: true,
+    enum: ["Single", "Double"],
   },
   umpire: {
     type: mongoose.Schema.Types.ObjectId,
@@ -24,7 +29,4 @@ const matchResultSchema = mongoose.Schema({
     required: true,
   },
 });
-exports.MatchResultDefault = mongoose.model(
-  "MatchResult",
-  matchResultSchema
-);
+exports.MatchResultDefault = mongoose.model("MatchResult", matchResultSchema);

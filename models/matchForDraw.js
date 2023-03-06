@@ -4,61 +4,75 @@ const matchForDrawSchema = mongoose.Schema({
   matchResult: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "MatchResult",
-    required: true,
   },
   ageGroup: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "AgeGroup",
     required: true,
   },
-  type: {
+  matchRound: {
     type: String,
     required: true,
-    enum: ['men','women','mix']
+    enum: [
+      "firstRound",
+      "secondRound",
+      "thirdRound",
+      "fourthRound",
+      "preQuaterFinal",
+      "quaterFinal",
+      "semiFinal",
+      "final",
+    ],
+  },
+  matchType: {
+    type: String,
+    required: true,
+    enum: [
+      "boys'Singles",
+      "boys'Doubles",
+      "girls'Singles",
+      "girls'Doubles",
+      "university",
+      "company",
+    ],
   },
   groupNumber: {
     type: Number,
-    required: true,
   },
   opponentGroupNumber: {
     type: Number,
-    required: true,
   },
   nextMatchNumber: {
     type: Number,
-    required: true,
+  },
+  matchNumber: {
+    type: Number,
   },
   playerOne: {
     type: mongoose.Schema.Types.ObjectId,
     refPath: "matchCategory",
-    required: true,
   },
   playerTwo: {
     type: mongoose.Schema.Types.ObjectId,
     refPath: "matchCategory",
-    required: true,
   },
   matchCategory: {
     type: String,
     required: true,
-    enum: ["Single", "Double", "Team"],
+    enum: ["Single", "Double"],
   },
   dateTime: {
     type: Date,
-    required: true,
   },
   status: {
     type: String,
-    required: true,
-    enum: ['notStarted','ongoing','finished']
+    enum: ["notStarted", "ongoing", "finished"],
   },
   court: {
     type: String,
-    required: true,
   },
   stadium: {
     type: String,
-    required: true,
   },
 });
 

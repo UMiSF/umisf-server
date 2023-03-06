@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
     {
       type: String,
       required: true,
-      enum: ["admin","umpire","table_organizer","organizer"],
+      enum: ["admin","umpire","tableOrganizer","organizer"],
     },
   ],
   contactNumber: {
