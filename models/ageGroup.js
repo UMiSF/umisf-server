@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-const ageGroupSchema = mongoose.Schema({
-  groupType: {
-    type: String,
-    required: true,
-  },
+const ageGroupSchema = new mongoose.Schema({
+  groupType: String
 });
 
 exports.AgeGroup = mongoose.model("AgeGroup", ageGroupSchema);

@@ -1,18 +1,8 @@
 const mongoose = require("mongoose");
 
-const matchResultSchema = mongoose.Schema({
-  teamOneScores: [
-    {
-      type: Number,
-      required: true,
-    },
-  ],
-  teamTwoScores: [
-    {
-      type: Number,
-      required: true,
-    },
-  ],
+const matchResultSchema = new mongoose.Schema({
+  teamOneScores: [Number],
+  teamTwoScores: [Number],
   winner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "matchType",

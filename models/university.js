@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const universitySchema = mongoose.Schema({
+const universitySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -13,7 +13,7 @@ const universitySchema = mongoose.Schema({
     paymentMethod: {
         type: String,
         required: true,
-        enum: ['onsite','bankTransfer']
+        enum: ['On-site','Bank Transfer']
       },
     hasPaymentDone: {
         type: Boolean,

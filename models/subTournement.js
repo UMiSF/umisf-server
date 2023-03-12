@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const subTournementSchema = mongoose.Schema({
+const subTournementSchema = new mongoose.Schema({
   ageGroup: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "AgeGroup",

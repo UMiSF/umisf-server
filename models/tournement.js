@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const tournementSchema = mongoose.Schema({
+const tournementSchema = new mongoose.Schema({
   year: {
     type: Number,
     required: true,

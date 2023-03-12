@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const yearlyConfigurationsSchema = mongoose.Schema({
+const yearlyConfigurationsSchema = new mongoose.Schema({
     captains: [
         {
           menCaptain: {

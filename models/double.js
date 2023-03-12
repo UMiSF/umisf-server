@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const doubleSchema = mongoose.Schema({
+const doubleSchema = new mongoose.Schema({
   ageGroup: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "AgeGroup",
+    type: String,
     required: true,
+    enum: ["Under 9", "Under 11", "Under 13", "Under 15", "Under 17", "Under 19", "Company", "University"]
   },
   matchType: {
     type: String,
