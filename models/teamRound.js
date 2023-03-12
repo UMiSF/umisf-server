@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const teamRoundSchema = new mongoose.Schema({
+const teamRoundSchema = new Schema({
   isTeam: {
     type: Boolean,
     default: true,
@@ -32,7 +33,7 @@ const teamRoundSchema = new mongoose.Schema({
     ref: "matchCategory",
     required: true,
   },
-  matches : [
+  matches: [
     {
       matchType: {
         type: String,
@@ -45,14 +46,14 @@ const teamRoundSchema = new mongoose.Schema({
           photo: String,
           team: {
             type: String,
-            enum: ["Team-one","Team-two"]
-          }
+            enum: ["Team-one", "Team-two"],
+          },
         },
       ],
       scores: [Number],
       winner: String,
       isFinished: Boolean,
-    }
+    },
   ], // store all five matches here
   // singleTwo: {
   //   teamOneSingle: {

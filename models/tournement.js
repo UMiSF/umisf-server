@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const tournementSchema = new mongoose.Schema({
+const tournementSchema = new Schema({
   year: {
     type: Number,
     required: true,

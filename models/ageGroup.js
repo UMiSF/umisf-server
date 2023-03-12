@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const ageGroupSchema = new mongoose.Schema({
-  groupType: String
+const ageGroupSchema = new Schema({
+  groupType: String,
 });
 
 exports.AgeGroup = mongoose.model("AgeGroup", ageGroupSchema);

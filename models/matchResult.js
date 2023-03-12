@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const matchResultSchema = new mongoose.Schema({
+const matchResultSchema = new Schema({
   teamOneScores: [Number],
   teamTwoScores: [Number],
   winner: {

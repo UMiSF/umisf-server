@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const matchForDrawSchema = new mongoose.Schema({
+const matchForDrawSchema = new Schema({
   isTeam: {
     type: Boolean,
     default: false,
@@ -12,7 +13,16 @@ const matchForDrawSchema = new mongoose.Schema({
   ageGroup: {
     type: String,
     required: true,
-    enum: ["Under 9", "Under 11", "Under 13", "Under 15", "Under 17", "Under 19", "Company", "University"]
+    enum: [
+      "Under 9",
+      "Under 11",
+      "Under 13",
+      "Under 15",
+      "Under 17",
+      "Under 19",
+      "Company",
+      "University",
+    ],
   },
   matchRound: {
     type: String,
@@ -66,7 +76,7 @@ const matchForDrawSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["Not started","Sheduled", "Ongoing", "Finished"],
+    enum: ["Not started", "Sheduled", "Ongoing", "Finished"],
   },
   court: {
     type: String,

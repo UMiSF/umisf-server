@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const singleSchema = new mongoose.Schema({
+const singleSchema = new Schema({
   ageGroup: {
     type: String,
     required: true,
