@@ -1,18 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const matchResultSchema = mongoose.Schema({
-  teamOneScores: [
-    {
-      type: Number,
-      required: true,
-    },
-  ],
-  teamTwoScores: [
-    {
-      type: Number,
-      required: true,
-    },
-  ],
+const matchResultSchema = new Schema({
+  teamOneScores: [Number],
+  teamTwoScores: [Number],
   winner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "matchType",

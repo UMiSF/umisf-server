@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const userSchema = mongoose.Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -17,7 +18,7 @@ const userSchema = mongoose.Schema({
     {
       type: String,
       required: true,
-      enum: ["admin","umpire","tableOrganizer","organizer"],
+      enum: ["admin", "umpire", "tableOrganizer", "organizer"],
     },
   ],
   contactNumber: {

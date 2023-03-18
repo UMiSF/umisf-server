@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const subTournementSchema = mongoose.Schema({
+const subTournementSchema = new Schema({
   ageGroup: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "AgeGroup",
@@ -8,7 +9,7 @@ const subTournementSchema = mongoose.Schema({
   },
   matchType: {
     type: String,
-    enum: ["Girls", "Boys","Men","Women", "Mix"], 
+    enum: ["Girls", "Boys", "Men", "Women", "Mix"],
   },
   drawArrayForSchools: [
     {

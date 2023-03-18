@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const teamRoundSchema = mongoose.Schema({
+const teamRoundSchema = new Schema({
   isTeam: {
     type: Boolean,
     default: true,
@@ -32,91 +33,96 @@ const teamRoundSchema = mongoose.Schema({
     ref: "matchCategory",
     required: true,
   },
-  singleOne: {
-    teamOneSingle: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Single",
-      required: true,
+  matches: [
+    {
+      matchType: {
+        type: String,
+        required: true,
+        enum: ["Single", "Double"],
+      },
+      playerPersonalDetails: [
+        {
+          name: String,
+          photo: String,
+          team: {
+            type: String,
+            enum: ["Team-one", "Team-two"],
+          },
+        },
+      ],
+      scores: [Number],
+      winner: String,
+      isFinished: Boolean,
     },
-    teamTwoSingle: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Single",
-      required: true,
-    },
-    result: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MatchResult",
-      required: true,
-    },
-  },
-  singleTwo: {
-    teamOneSingle: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Single",
-      required: true,
-    },
-    teamTwoSingle: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Single",
-      required: true,
-    },
-    result: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MatchResult",
-      required: true,
-    },
-  },
-  singleThree: {
-    teamOneSingle: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Single",
-      required: true,
-    },
-    teamTwoSingle: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Single",
-      required: true,
-    },
-    result: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MatchResult",
-      required: true,
-    },
-  },
-  doubleOne: {
-    teamOneDouble: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Double",
-      required: true,
-    },
-    teamTwoDouble: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Double",
-      required: true,
-    },
-    result: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MatchResult",
-      required: true,
-    },
-  },
-  doubleTwo: {
-    teamOneDouble: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Double",
-      required: true,
-    },
-    teamTwoDouble: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Double",
-      required: true,
-    },
-    result: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "MatchResult",
-      required: true,
-    },
-  },
+  ], // store all five matches here
+  // singleTwo: {
+  //   teamOneSingle: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Single",
+  //     required: true,
+  //   },
+  //   teamTwoSingle: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Single",
+  //     required: true,
+  //   },
+  //   result: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "MatchResult",
+  //     required: true,
+  //   },
+  // },
+  // singleThree: {
+  //   teamOneSingle: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Single",
+  //     required: true,
+  //   },
+  //   teamTwoSingle: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Single",
+  //     required: true,
+  //   },
+  //   result: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "MatchResult",
+  //     required: true,
+  //   },
+  // },
+  // doubleOne: {
+  //   teamOneDouble: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Double",
+  //     required: true,
+  //   },
+  //   teamTwoDouble: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Double",
+  //     required: true,
+  //   },
+  //   result: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "MatchResult",
+  //     required: true,
+  //   },
+  // },
+  // doubleTwo: {
+  //   teamOneDouble: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Double",
+  //     required: true,
+  //   },
+  //   teamTwoDouble: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Double",
+  //     required: true,
+  //   },
+  //   result: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "MatchResult",
+  //     required: true,
+  //   },
+  // },
   matchRound: {
     type: String,
     required: true,
