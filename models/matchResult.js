@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const matchResultSchema = new Schema({
@@ -6,18 +6,18 @@ const matchResultSchema = new Schema({
   teamTwoScores: [Number],
   winner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "matchType",
+    ref: 'matchType',
     required: true,
   },
   matchType: {
     type: String,
     required: true,
-    enum: ["Single", "Double"],
+    enum: ['Single', 'Double'],
   },
   umpire: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
 });
-exports.MatchResultDefault = mongoose.model("MatchResult", matchResultSchema);
+module.exports = mongoose.model('MatchResult', matchResultSchema);

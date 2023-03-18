@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const yearlyConfigurationsSchema = new Schema({
@@ -6,22 +6,22 @@ const yearlyConfigurationsSchema = new Schema({
     {
       menCaptain: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
+        ref: 'Captain',
         required: true,
       },
       menViceCaptain: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
+        ref: 'Captain',
         required: true,
       },
       womenCaptain: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
+        ref: 'Captain',
         required: true,
       },
       womenViceCaptain: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Captain",
+        ref: 'Captain',
         required: true,
       },
     },
@@ -32,7 +32,7 @@ const yearlyConfigurationsSchema = new Schema({
   },
 });
 
-exports.YearlyConfigurations = mongoose.model(
-  "YearlyConfigurations",
+module.exports = mongoose.model(
+  'YearlyConfigurations',
   yearlyConfigurationsSchema
 );

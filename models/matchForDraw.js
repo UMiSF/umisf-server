@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const matchForDrawSchema = new Schema({
@@ -8,40 +8,40 @@ const matchForDrawSchema = new Schema({
   },
   matchResult: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "MatchResult",
+    ref: 'MatchResult',
   },
   ageGroup: {
     type: String,
     required: true,
     enum: [
-      "Under 9",
-      "Under 11",
-      "Under 13",
-      "Under 15",
-      "Under 17",
-      "Under 19",
-      "Company",
-      "University",
+      'Under 9',
+      'Under 11',
+      'Under 13',
+      'Under 15',
+      'Under 17',
+      'Under 19',
+      'Company',
+      'University',
     ],
   },
   matchRound: {
     type: String,
     required: true,
     enum: [
-      "First Round",
-      "Second Round",
-      "Third Round",
-      "Fourth Round",
-      "Pre-quater Final",
-      "Quater Final",
-      "Semi Final",
-      "Final",
+      'First Round',
+      'Second Round',
+      'Third Round',
+      'Fourth Round',
+      'Pre-quater Final',
+      'Quater Final',
+      'Semi Final',
+      'Final',
     ],
   },
   matchType: {
     type: String,
     required: true,
-    enum: ["Boys", "Girls"],
+    enum: ['Boys', 'Girls'],
   },
   groupNumber: {
     type: Number,
@@ -57,16 +57,16 @@ const matchForDrawSchema = new Schema({
   },
   playerOne: {
     type: mongoose.Schema.Types.ObjectId,
-    refPath: "matchCategory",
+    refPath: 'matchCategory',
   },
   playerTwo: {
     type: mongoose.Schema.Types.ObjectId,
-    refPath: "matchCategory",
+    refPath: 'matchCategory',
   },
   matchCategory: {
     type: String,
     required: true,
-    enum: ["Single", "Double"],
+    enum: ['Single', 'Double'],
   },
   scheduledDate: {
     type: String,
@@ -76,7 +76,7 @@ const matchForDrawSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["Not started", "Sheduled", "Ongoing", "Finished"],
+    enum: ['Not started', 'Sheduled', 'Ongoing', 'Finished'],
   },
   court: {
     type: String,
@@ -86,4 +86,4 @@ const matchForDrawSchema = new Schema({
   },
 });
 
-exports.MatchForDraw = mongoose.model("MatchForDraw", matchForDrawSchema);
+module.exports = mongoose.model('MatchForDraw', matchForDrawSchema);

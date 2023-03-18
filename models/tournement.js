@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const tournementSchema = new Schema({
@@ -31,7 +31,7 @@ const tournementSchema = new Schema({
   subTournaments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "SubTournament",
+      ref: 'SubTournament',
       required: true,
     },
   ],
@@ -55,4 +55,4 @@ const tournementSchema = new Schema({
   },
 });
 
-exports.Tournement = mongoose.model("Tournement", tournementSchema);
+module.exports = mongoose.model('Tournement', tournementSchema);

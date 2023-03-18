@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const teamRoundSchema = new Schema({
@@ -21,16 +21,16 @@ const teamRoundSchema = new Schema({
   matchType: {
     type: String,
     required: true,
-    enum: ["Men", "Women"],
+    enum: ['Men', 'Women'],
   },
   teamOne: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "matchCategory",
+    ref: 'matchCategory',
     required: true,
   },
   teamTwo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "matchCategory",
+    ref: 'matchCategory',
     required: true,
   },
   matches: [
@@ -38,7 +38,7 @@ const teamRoundSchema = new Schema({
       matchType: {
         type: String,
         required: true,
-        enum: ["Single", "Double"],
+        enum: ['Single', 'Double'],
       },
       playerPersonalDetails: [
         {
@@ -46,7 +46,7 @@ const teamRoundSchema = new Schema({
           photo: String,
           team: {
             type: String,
-            enum: ["Team-one", "Team-two"],
+            enum: ['Team-one', 'Team-two'],
           },
         },
       ],
@@ -127,25 +127,25 @@ const teamRoundSchema = new Schema({
     type: String,
     required: true,
     enum: [
-      "firstRound",
-      "secondRound",
-      "thirdRound",
-      "fourthRound",
-      "preQuaterFinal",
-      "quaterFinal",
-      "semiFinal",
-      "final",
+      'firstRound',
+      'secondRound',
+      'thirdRound',
+      'fourthRound',
+      'preQuaterFinal',
+      'quaterFinal',
+      'semiFinal',
+      'final',
     ],
   },
   winner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "matchCategory",
+    ref: 'matchCategory',
     required: true,
   },
   matchCategory: {
     type: String,
     required: true,
-    enum: ["University", "Company"],
+    enum: ['University', 'Company'],
   },
   scheduledDate: {
     type: String,
@@ -155,7 +155,7 @@ const teamRoundSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["Not started", "Sheduled", "Ongoing", "Finished"],
+    enum: ['Not started', 'Sheduled', 'Ongoing', 'Finished'],
   },
   court: {
     type: String,
@@ -165,8 +165,8 @@ const teamRoundSchema = new Schema({
   },
   umpire: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
 });
-exports.MatchResultCompany = mongoose.model("TeamRound", teamRoundSchema);
+module.exports = mongoose.model('TeamRound', teamRoundSchema);

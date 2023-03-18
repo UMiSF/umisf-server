@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const playerSchema = new Schema({
@@ -49,7 +49,7 @@ const playerSchema = new Schema({
     required: true,
   },
   contactNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   email: {
@@ -61,4 +61,6 @@ const playerSchema = new Schema({
   },
 });
 
-exports.Player = mongoose.model("Player", playerSchema);
+playerSchema.index({ contactNumber: 1 });
+
+module.exports = mongoose.model('Player', playerSchema);

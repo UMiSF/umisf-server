@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const singleSchema = new Schema({
@@ -6,30 +6,30 @@ const singleSchema = new Schema({
     type: String,
     required: true,
     enum: [
-      "Under 9",
-      "Under 11",
-      "Under 13",
-      "Under 15",
-      "Under 17",
-      "Under 19",
-      "Company",
-      "University",
+      'Under 9',
+      'Under 11',
+      'Under 13',
+      'Under 15',
+      'Under 17',
+      'Under 19',
+      'Company',
+      'University',
     ],
   },
   matchType: {
     type: String,
     required: true,
-    enum: ["Girls", "Boys", "Men", "Women", "Mix"],
+    enum: ['Girls', 'Boys', 'Men', 'Women', 'Mix'],
   },
   player: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Player",
+    ref: 'Player',
     required: true,
   },
   paymentMethod: {
     type: String,
     required: true,
-    enum: ["On-site", "Bank Transfer"],
+    enum: ['On-site', 'Bank Transfer'],
   },
   hasPaymentDone: {
     type: Boolean,
@@ -43,9 +43,9 @@ const singleSchema = new Schema({
   },
   paymentApprover: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
 });
 
-exports.Single = mongoose.model("Single", singleSchema);
+module.exports = mongoose.model('Single', singleSchema);

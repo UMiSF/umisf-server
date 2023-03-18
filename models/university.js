@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const universitySchema = new Schema({
@@ -9,14 +9,14 @@ const universitySchema = new Schema({
   players: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Player",
+      ref: 'Player',
       required: true,
     },
   ],
   paymentMethod: {
     type: String,
     required: true,
-    enum: ["On-site", "Bank Transfer"],
+    enum: ['On-site', 'Bank Transfer'],
   },
   hasPaymentDone: {
     type: Boolean,
@@ -31,4 +31,4 @@ const universitySchema = new Schema({
   },
 });
 
-exports.University = mongoose.model("University", universitySchema);
+module.exports = mongoose.model('University', universitySchema);

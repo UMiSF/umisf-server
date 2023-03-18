@@ -1,66 +1,66 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const subTournementSchema = new Schema({
   ageGroup: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "AgeGroup",
+    ref: 'AgeGroup',
     required: true,
   },
   matchType: {
     type: String,
-    enum: ["Girls", "Boys", "Men", "Women", "Mix"],
+    enum: ['Girls', 'Boys', 'Men', 'Women', 'Mix'],
   },
   drawArrayForSchools: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "MatchForDraw",
+      ref: 'MatchForDraw',
       required: true,
     },
   ],
   drawArrayForTeams: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "teamRounds",
+      ref: 'teamRounds',
       required: true,
     },
   ],
   doubles: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Double",
+      ref: 'Double',
     },
   ],
   singles: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Single",
+      ref: 'Single',
     },
   ],
   universities: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "University",
+      ref: 'University',
     },
   ],
   companies: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Company",
+      ref: 'Company',
     },
   ],
   champion: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Player",
+    ref: 'Player',
   },
   firstRunnerUp: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Player",
+    ref: 'Player',
   },
   secondRunnerUp: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Player",
+    ref: 'Player',
   },
 });
 
-exports.SubTournement = mongoose.model("SubTournement", subTournementSchema);
+module.exports = mongoose.model('SubTournement', subTournementSchema);
