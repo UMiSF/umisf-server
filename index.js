@@ -22,9 +22,12 @@ const PORT = process.env.PORT || 3001;
 
 /* ROUTES */
 const playerRouter = require('./router/playerRouter');
-app.use('/player', playerRouter);
+const singleRouter = require('./router/singleRouter')
 
-app.get('/', (req, res) => {
+app.use('/player', playerRouter);
+app.use('/single',singleRouter)
+
+app.get(api + '/', (req, res) => {
   res.send('UMiSF API Started');
 });
 
@@ -42,5 +45,5 @@ mongoose
   });
 
 app.listen(PORT, () => {
-  console.log('Listening to port number' + PORT);
+  console.log('Listening to port number ' + PORT);
 });

@@ -18,10 +18,13 @@ const addPlayer = async (req, res) => {
   }
 
   return await databaseWrapper.add('player', playerData, res);
-};
+}; 
 
 const getAllPlayers = async (req, res) => {
-  return await databaseWrapper.read('player', res);
+  const result =  await databaseWrapper.read('player', res);
+    res
+      .status(201)
+      .send({ message: result.message, data: result.data });
 };
 
 const deleteByField = async (req, res) => {
