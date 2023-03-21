@@ -18,9 +18,8 @@ const companySchema = new Schema({
     required: true,
     enum: ["On-site", "Bank Transfer"],
   },
-  hasPaymentDone: {
+  paymentConfirmed: {
     type: Boolean,
-    required: true,
   },
   paymentSlip: {
     type: String,
@@ -30,7 +29,7 @@ const companySchema = new Schema({
     ref: "User",
     required: true,
   },
-  type: {
+  gender: {
     type: String,
   },
 });

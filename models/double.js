@@ -39,10 +39,6 @@ const doubleSchema = new Schema({
   paymentConfirmed: {
     type: Boolean,
   },
-  hasPaymentDone: {
-    type: Boolean,
-    required: true,
-  },
   paymentSlip: {
     type: String,
   },

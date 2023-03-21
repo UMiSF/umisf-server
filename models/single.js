@@ -31,10 +31,6 @@ const singleSchema = new Schema({
     required: true,
     enum: ["On-site", "Bank Transfer"],
   },
-  hasPaymentDone: {
-    type: Boolean,
-    required: true,
-  },
   paymentConfirmed: {
     type: Boolean,
   },
