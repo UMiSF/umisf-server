@@ -58,7 +58,11 @@ const update = async (collectionName, field, value, data, res) => {
     const dbResponse = await schemas[collectionName].findOneAndUpdate(filter, data, {
       new: true,
     });
-    res.status(201).send({ message: "Data has been updated", data: dbResponse });
+    if (dbResponse == null) {
+      return res.status(400).send("Invalid Inputs. Records not found");
+    } else {
+      res.status(201).send({ message: "Data has been updated", data: dbResponse });
+    }
   } catch (e) {
     res.status(500).send({ message: "Server error", error: e });
   }
@@ -96,22 +100,46 @@ const createAndUpdate = async (insertData, updateData, res) => {
     const toInsertData = insertData.data;
     const updateCollection = updateData.name;
     const toUpdateData = updateData.data;
-    console.log("data: ", insertCollection, toInsertData, updateCollection, toUpdateData)
+    const filterField = updateData.filterField;
     session.startTransaction();
     const result = await schemas[insertCollection].create(toInsertData);
-    console.log("Insert result", result)
-    await schemas[updateCollection].findOneAndUpdate({ _id: result.player.toString()}, toUpdateData);
+    await schemas[updateCollection].findOneAndUpdate({ _id: result[filterField].toString() }, toUpdateData);
     await session.commitTransaction();
   } catch (error) {
     console.log("Error during the transaction");
     await session.abortTransaction();
     await session.endSession();
     return res.status(500).send({ message: "Server error", error: e });
-  } 
+  }
   await session.endSession();
-    console.log("End session")
-    return true
-  
+  return true;
+};
+
+const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection, reuseField, res) => {
+  const session = await mongoose.startSession();
+  let finalResponse = null;
+  try {
+    const firstCollection = dataForFirstCollection.name;
+    const firstCollectionData = dataForFirstCollection.data;
+    const secondCollection = dataForSecondCollection.name;
+    const secondCollectionData = dataForSecondCollection.data;
+    session.startTransaction();
+    const result = await schemas[firstCollection].insertMany(firstCollectionData, { rawResult: true });
+    console.log("result adding data 1:", result)
+    if (!result.acknowledged) {
+      res.status(500).send("Error in insert options provided");
+    } else {
+      secondCollectionData[reuseField] = Object.values(result.insertedIds);
+      finalResponse = await schemas[secondCollection].create(secondCollectionData);
+    }
+  } catch (error) {
+    console.log("Error during the transaction");
+    await session.abortTransaction();
+    await session.endSession();
+    res.status(500).send({ message: "Server error", error: e });
+  }
+  await session.endSession();
+  res.status(201).send({ messsage: "Data added successfully", data: finalResponse });
 };
 
 module.exports = {
@@ -122,4 +150,5 @@ module.exports = {
   isValidObjectId,
   getAllFields,
   createAndUpdate,
+  atomicDualCreate,
 };

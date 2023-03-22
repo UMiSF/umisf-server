@@ -1,5 +1,4 @@
 const databaseWrapper = require("../database/databaseWrapper");
-const single = require("../models/single");
 
 const addSingle = async (req, res) => {
   try {
@@ -37,7 +36,11 @@ const addSingle = async (req, res) => {
             paymentMethod: single.paymentMethod,
             paymentSlip: single.paymentSlip != null ? single.paymentSlip : "N/A",
           };
-          await databaseWrapper.createAndUpdate({ name: "single", data: singleData }, { name: "player", data: { pastPerformanceSingle: single.pastPerformance } }, res);
+          await databaseWrapper.createAndUpdate(
+            { name: "single", data: singleData },
+            { name: "player", data: { pastPerformanceSingle: single.pastPerformance }, filterField: "player" },
+            res
+          );
         } else {
           return res.status(400).send("Invalid Player ID");
         }

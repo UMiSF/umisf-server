@@ -6,6 +6,11 @@ const universitySchema = new Schema({
     type: String,
     required: true,
   },
+  matchType: {
+    type: String,
+    required: true,
+    enum: ['Men', 'Women'],
+  },
   players: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -18,14 +23,23 @@ const universitySchema = new Schema({
     required: true,
     enum: ['On-site', 'Bank Transfer'],
   },
-  hasPaymentDone: {
+  paymentConfirmed: {
     type: Boolean,
-    required: true,
+    default:false
   },
   paymentSlip: {
     type: String,
   },
-  type: {
+  paymentApprover: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    
+  },
+  contactNumber: {
+    type: String,
+    required: true,
+  },
+  email: {
     type: String,
     required: true,
   },
