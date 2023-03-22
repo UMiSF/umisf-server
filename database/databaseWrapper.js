@@ -34,9 +34,7 @@ const schemas = {
 const add = async (collectionName, data, res) => {
   try {
     const dbResponse = await schemas[collectionName].create(data);
-    res
-      .status(201)
-      .send({ message: "New Data has been added", data: dbResponse });
+    res.status(201).send({ message: "New Data has been added", data: dbResponse });
   } catch (e) {
     res.status(500).send({ message: "Server error", error: e });
   }
@@ -47,9 +45,7 @@ const remove = async (collectionName, field, value, res) => {
     const filter = {};
     filter[field] = value;
     const dbResponse = await schemas[collectionName].findOneAndDelete(filter);
-    res
-      .status(200)
-      .send({ message: "Data deleted successfully", data: dbResponse });
+    res.status(200).send({ message: "Data deleted successfully", data: dbResponse });
   } catch (e) {
     res.status(500).send({ message: "Server error", error: e });
   }
@@ -59,16 +55,10 @@ const update = async (collectionName, field, value, data, res) => {
   try {
     const filter = {};
     filter[field] = value;
-    const dbResponse = await schemas[collectionName].findOneAndUpdate(
-      filter,
-      data,
-      {
-        new: true,
-      }
-    );
-    res
-      .status(201)
-      .send({ message: "Data has been updated", data: dbResponse });
+    const dbResponse = await schemas[collectionName].findOneAndUpdate(filter, data, {
+      new: true,
+    });
+    res.status(201).send({ message: "Data has been updated", data: dbResponse });
   } catch (e) {
     res.status(500).send({ message: "Server error", error: e });
   }
@@ -95,10 +85,34 @@ const isValidObjectId = (id) => {
   return true;
 };
 
-const getAllFields = (schemaName)=>{
-  return Object.keys(schemas[schemaName].schema.paths)
+const getAllFields = (schemaName) => {
+  return Object.keys(schemas[schemaName].schema.paths);
+};
 
-}
+const createAndUpdate = async (insertData, updateData, res) => {
+  const session = await mongoose.startSession();
+  try {
+    const insertCollection = insertData.name;
+    const toInsertData = insertData.data;
+    const updateCollection = updateData.name;
+    const toUpdateData = updateData.data;
+    console.log("data: ", insertCollection, toInsertData, updateCollection, toUpdateData)
+    session.startTransaction();
+    const result = await schemas[insertCollection].create(toInsertData);
+    console.log("Insert result", result)
+    await schemas[updateCollection].findOneAndUpdate({ _id: result.player.toString()}, toUpdateData);
+    await session.commitTransaction();
+  } catch (error) {
+    console.log("Error during the transaction");
+    await session.abortTransaction();
+    await session.endSession();
+    return res.status(500).send({ message: "Server error", error: e });
+  } 
+  await session.endSession();
+    console.log("End session")
+    return true
+  
+};
 
 module.exports = {
   add,
@@ -106,5 +120,6 @@ module.exports = {
   update,
   read,
   isValidObjectId,
-  getAllFields
+  getAllFields,
+  createAndUpdate,
 };

@@ -6,7 +6,7 @@ const addSingle = async (req, res) => {
     const { singleData } = req.body;
     for (let i = 0; i < singleData.length; i++) {
       const single = singleData[i];
-      if (!single.ageGroup || !single.matchType || !single.player || !single.paymentMethod) {
+      if (!single.ageGroup || !single.player || !single.paymentMethod) {
         return res.status(400).send({ message: "required data not filled" });
       } else {
         //check whether a valid object id
@@ -15,7 +15,7 @@ const addSingle = async (req, res) => {
           const validateArray = Object.keys(single).filter((field) => {
             return !databaseWrapper.getAllFields("single").includes(field);
           });
-          if (validateArray.length != 0) {
+          if (validateArray.length != 0 && validateArray.length == 1 && single.pastPerformance == null) {
             return res.status(400).send("Invalid field for schema -> Single");
           }
           //check whether the player has registered
@@ -29,12 +29,21 @@ const addSingle = async (req, res) => {
           if (singlePlayer.data?.length != 0) {
             return res.status(409).send("This player ID is already registered for a single match");
           }
+          //create the single and update the player's performance
+          const singleData = {
+            ageGroup: single.ageGroup,
+            matchType: player.gender == "Male" ? "Boys" : "Girls",
+            player: single.player,
+            paymentMethod: single.paymentMethod,
+            paymentSlip: single.paymentSlip != null ? single.paymentSlip : "N/A",
+          };
+          await databaseWrapper.createAndUpdate({ name: "single", data: singleData }, { name: "player", data: { pastPerformanceSingle: single.pastPerformance } }, res);
         } else {
           return res.status(400).send("Invalid Player ID");
         }
       }
-      return await databaseWrapper.add("single", singleData, res);
     }
+    return res.status(201).send("Singles created successfully");
   } catch (error) {
     console.log("Error adding single", error);
     return res.status(500).send("Internal Server Error");
