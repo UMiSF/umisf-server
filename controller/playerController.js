@@ -1,7 +1,7 @@
 const databaseWrapper = require('../database/databaseWrapper');
 
 const addPlayer = async (req, res) => {
-  const { playerData } = req.body;
+  const  playerData  = req.body;
   for (let i = 0; i < playerData.length; i++) {
     const player = playerData[i];
     if (
