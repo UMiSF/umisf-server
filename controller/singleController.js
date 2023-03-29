@@ -15,18 +15,18 @@ const addSingle = async (req, res) => {
             return !databaseWrapper.getAllFields("single").includes(field);
           });
           if (validateArray.length != 0 && validateArray.length == 1 && single.pastPerformance == null) {
-            return res.status(400).send("Invalid field for schema -> Single");
+            return res.status(400).send({message:"Invalid field for schema -> Single"});
           }
           //check whether the player has registered
           const player = await databaseWrapper.read("player", res, ["_id"], [single.player]);
 
           if (player.data == null || player.data.length == 0) {
-            return res.status(400).send("Invalid Player ID. Register as a player first");
+            return res.status(400).send({message:"Invalid Player ID. Register as a player first"});
           }
           //check whether the player already registered for single
           const singlePlayer = await databaseWrapper.read("single", res, ["player"], [single.player]);
           if (singlePlayer.data?.length != 0) {
-            return res.status(409).send("This player ID is already registered for a single match");
+            return res.status(409).send({message:"This player ID is already registered for a single match"});
           }
           //create the single and update the player's performance
           const singleData = {
@@ -42,14 +42,14 @@ const addSingle = async (req, res) => {
             res
           );
         } else {
-          return res.status(400).send("Invalid Player ID");
+          return res.status(400).send({message:"Invalid Player ID"});
         }
       }
     }
-    return res.status(201).send("Singles created successfully");
+    return res.status(201).send({message:"Singles created successfully"});
   } catch (error) {
     console.log("Error adding single", error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send({message:"Internal Server Error"});
   }
 };
 
@@ -81,7 +81,7 @@ const updateSingle = async (req, res) => {
       return !databaseWrapper.getAllFields("single").includes(field);
     });
     if (validateArray.length != 0) {
-      return res.status(400).send("Invalid field for schema -> Single");
+      return res.status(400).send({message:"Invalid field for schema -> Single"});
     }
     return await databaseWrapper.update("single", field, value, data, res);
   } catch (e) {

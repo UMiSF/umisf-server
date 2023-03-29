@@ -7,6 +7,12 @@ const addPlayer = async (req, res) => {
     if (!player.firstName || !player.lastName || !player.institute || !player.performanceThreshold || !player.gender || !player.contactNumber || !player.photo) {
       return res.status(400).send({ message: "required data not filled" });
     }
+    //check whether the player already registered
+    const playerExist = await databaseWrapper.read("player", res, ["email"], [player.email]);
+    console.log("Player exists: ", playerExist);
+    if (playerExist.data?.length != 0) {
+      return res.status(409).send({ message: "This email is already used for a player" });
+    }
   }
 
   return await databaseWrapper.add("player", playerData, res);

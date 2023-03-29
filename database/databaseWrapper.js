@@ -127,7 +127,7 @@ const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection,
     const result = await schemas[firstCollection].insertMany(firstCollectionData, { rawResult: true });
     console.log("result adding data 1:", result)
     if (!result.acknowledged) {
-      res.status(500).send("Error in insert options provided");
+      res.status(500).send({message:"Error in insert options provided"});
     } else {
       secondCollectionData[reuseField] = Object.values(result.insertedIds);
       finalResponse = await schemas[secondCollection].create(secondCollectionData);
