@@ -9,7 +9,7 @@ const universitySchema = new Schema({
   matchType: {
     type: String,
     required: true,
-    enum: ['Men', 'Women'],
+    enum: ['Male', 'Female'],
   },
   players: [
     {

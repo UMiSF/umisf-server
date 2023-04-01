@@ -39,7 +39,6 @@ const playerSchema = new Schema({
   ],
   performanceThreshold: {
     type: Number,
-    required: true,
   },
   rank: {
     type: Number,

@@ -31,7 +31,7 @@ const addSingle = async (req, res) => {
           //create the single and update the player's performance
           const singleData = {
             ageGroup: single.ageGroup,
-            matchType: player.gender == "Male" ? "Boys" : "Girls",
+            matchType: (player.data[0].gender == "Male") ? (single.ageGroup !== 'University' && single.ageGroup !== "Staff") ? "Boys" : "Men": (single.ageGroup !== 'University' && single.ageGroup !== "Staff") ? "Girls": "Women",
             player: single.player,
             paymentMethod: single.paymentMethod,
             paymentSlip: single.paymentSlip != null ? single.paymentSlip : "N/A",

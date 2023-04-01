@@ -1,6 +1,7 @@
 const databaseWrapper = require("../database/databaseWrapper");
 
 const addPlayer = async (req, res) => {
+  //TODO: email the player id
   const { playerData } = req.body;
   for (let i = 0; i < playerData.length; i++) {
     const player = playerData[i];
