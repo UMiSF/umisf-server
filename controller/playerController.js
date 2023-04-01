@@ -58,12 +58,12 @@ const getPlayerByObjectId = async (req, res) => {
   if (databaseWrapper.isValidObjectId(value)) {
     const player = await databaseWrapper.read("player", res, ["_id"], [value]);
     if (player.data == null || player.data.length == 0) {
-      return res.status(400).send("Invalid Player ID. Register as a player first");
+      return res.status(400).send({ message:"Invalid Player ID. Register as a player first"});
     } else {
       return res.status(201).send({ message: player.message, data: player.data });
     }
   } else {
-    return res.status(400).send("Invalid Player ID");
+    return res.status(400).send({ message:"Invalid Player ID"});
   }
 };
 
