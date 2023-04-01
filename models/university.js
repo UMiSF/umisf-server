@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const universitySchema = new Schema({
@@ -7,21 +7,26 @@ const universitySchema = new Schema({
     required: true,
   },
   year: String,
+  matchType: {
+    type: String,
+    required: true,
+    enum: ["Male", "Female"],
+  },
   players: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Player',
+      ref: "Player",
       required: true,
     },
   ],
   paymentMethod: {
     type: String,
     required: true,
-    enum: ['On-site', 'Bank Transfer'],
+    enum: ["On-site", "Bank Transfer"],
   },
   paymentConfirmed: {
     type: String,
-    enum:['Confirmed','Not Confirmed', 'Declined']
+    enum: ["Confirmed", "Not Confirmed", "Declined"],
   },
   paymentSlip: {
     type: String,
@@ -29,6 +34,17 @@ const universitySchema = new Schema({
   gender: {
     type: String,
   },
+  paymentApprover: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  contactNumber: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+  },
 });
 
-module.exports = mongoose.model('University', universitySchema);
+module.exports = mongoose.model("University", universitySchema);

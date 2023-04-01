@@ -34,6 +34,15 @@ const companySchema = new Schema({
   gender: {
     type: String,
   },
-});
+  contactNumber: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
 
+});
+companySchema.index( { email: 1 }, { unique: true } )
 module.exports = mongoose.model('Company', companySchema);
