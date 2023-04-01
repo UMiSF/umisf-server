@@ -16,6 +16,7 @@ const singleSchema = new Schema({
       'University',
     ],
   },
+  year: String,
   matchType: {
     type: String,
     required: true,
@@ -32,7 +33,8 @@ const singleSchema = new Schema({
     enum: ['On-site', 'Bank Transfer'],
   },
   paymentConfirmed: {
-    type: Boolean,
+    type: String,
+    enum:['Confirmed','Not Confirmed', 'Declined']
   },
   paymentSlip: {
     type: String,

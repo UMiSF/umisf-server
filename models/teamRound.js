@@ -50,79 +50,12 @@ const teamRoundSchema = new Schema({
           },
         },
       ],
-      scores: [Number],
+      teamOneScores: [Number],
+      teamTwoScores: [Number],
       winner: String,
       isFinished: Boolean,
     },
-  ], // store all five matches here
-  // singleTwo: {
-  //   teamOneSingle: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Single",
-  //     required: true,
-  //   },
-  //   teamTwoSingle: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Single",
-  //     required: true,
-  //   },
-  //   result: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "MatchResult",
-  //     required: true,
-  //   },
-  // },
-  // singleThree: {
-  //   teamOneSingle: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Single",
-  //     required: true,
-  //   },
-  //   teamTwoSingle: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Single",
-  //     required: true,
-  //   },
-  //   result: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "MatchResult",
-  //     required: true,
-  //   },
-  // },
-  // doubleOne: {
-  //   teamOneDouble: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Double",
-  //     required: true,
-  //   },
-  //   teamTwoDouble: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Double",
-  //     required: true,
-  //   },
-  //   result: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "MatchResult",
-  //     required: true,
-  //   },
-  // },
-  // doubleTwo: {
-  //   teamOneDouble: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Double",
-  //     required: true,
-  //   },
-  //   teamTwoDouble: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Double",
-  //     required: true,
-  //   },
-  //   result: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "MatchResult",
-  //     required: true,
-  //   },
-  // },
+  ], 
   matchRound: {
     type: String,
     required: true,

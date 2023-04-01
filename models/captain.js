@@ -28,8 +28,7 @@ const captainSchema = new Schema({
     required: true,
   },
   year: {
-    type: Date,
-    required: true,
+    type: String,
   },
 });
 

@@ -26,6 +26,7 @@ const yearlyConfigurationsSchema = new Schema({
       },
     },
   ],
+  year:String,
   groupphoto: {
     type: String,
     required: true,

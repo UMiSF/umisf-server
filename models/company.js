@@ -6,6 +6,7 @@ const companySchema = new Schema({
     type: String,
     required: true,
   },
+  year: String,
   players: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -18,9 +19,9 @@ const companySchema = new Schema({
     required: true,
     enum: ['On-site', 'Bank Transfer'],
   },
-  hasPaymentDone: {
-    type: Boolean,
-    required: true,
+  paymentConfirmed: {
+    type: String,
+    enum:['Confirmed','Not Confirmed', 'Declined']
   },
   paymentSlip: {
     type: String,
@@ -30,7 +31,7 @@ const companySchema = new Schema({
     ref: 'User',
     required: true,
   },
-  type: {
+  gender: {
     type: String,
   },
 });

@@ -6,6 +6,7 @@ const matchForDrawSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  year: String,
   matchResult: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'MatchResult',
