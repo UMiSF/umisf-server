@@ -3,7 +3,7 @@ const playerController = require('../controller/playerController');
 const router = express.Router();
 
 router.get('/getAll', playerController.getAllPlayers);
-router.get('/getByObjectId/:value', playerController.getPlayerByObjectId);
+router.get('/getByObjectId', playerController.getPlayerByObjectId);
 
 router.post('/add', playerController.addPlayer);
 

@@ -53,18 +53,22 @@ const updatePlayer = async (req, res) => {
 
 const getPlayerByObjectId = async (req, res) => {
 
-  const { value } = req?.params;
-  console.log("Value: ", value)
-  //check whether a valid object id
-  if (databaseWrapper.isValidObjectId(value)) {
-    const player = await databaseWrapper.read("player", res, ["_id"], [value]);
+  let { ids} = req?.query;
+  console.log("IDs: ", ids)
+  ids = ids?.split(',')
+  console.log("IDs: ", ids)
+//  //check whether valid object ids
+  const validations = ids.filter((value)=> {return databaseWrapper.isValidObjectId(value) == false})
+  if (validations.length === 0) {
+    
+    const player = await databaseWrapper.read("player", res, ['_id'], [ids]);
     if (player.data == null || player.data.length == 0) {
       return res.status(400).send({ message:"Invalid Player ID. Register as a player first"});
     } else {
       return res.status(201).send({ message: player.message, data: player.data });
     }
   } else {
-    return res.status(400).send({ message:"Invalid Player ID"});
+    return res.status(400).send({ message:"Invalid ID included "});
   }
 };
 
