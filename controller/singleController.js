@@ -1,4 +1,5 @@
 const databaseWrapper = require("../database/databaseWrapper");
+const transporter = require('../helpers/nodeMailer/helperNodeMailer.js') 
 
 const addSingle = async (req, res) => {
   try {
@@ -90,9 +91,28 @@ const updateSingle = async (req, res) => {
   }
 };
 
+const testMail = async (req,res)=>{
+  const { recip, msg} = req?.query;
+  let mailOptions = {
+    from: process.env.TRANSPORTER_USERNAME,
+    to: recip,
+    subject: 'Test email',
+    text: msg
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Email sent: ' + info.response);
+    }
+});
+}
+
 module.exports = {
   addSingle,
   getAllSingles,
   deleteByField,
   updateSingle,
+  testMail
 };

@@ -3,6 +3,7 @@ const singleController = require('../controller/singleController');
 const router = express.Router();
 
 router.get('/getAll', singleController.getAllSingles);
+router.get('/testMail', singleController.testMail);
 
 router.post('/add', singleController.addSingle);
 
