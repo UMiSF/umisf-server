@@ -2,7 +2,7 @@ const databaseWrapper = require('../database/databaseWrapper');
 
 const add = async (req, res) => {
   try {
-    const { companyDetails, players } = req?.body;
+    const { companyDetails, players } = req?.body || {};
     return await databaseWrapper.atomicDualCreate(
       { name: 'player', data: players },
       { name: 'company', data: companyDetails },
@@ -22,7 +22,7 @@ const getAll = async (req, res) => {
 
 const deleteByField = async (req, res) => {
   try {
-    const { field, value } = req?.params;
+    const { field, value } = req?.params || {};
     if (!field || !value) {
       return res.status(400).send({ message: 'required data not filled' });
     }
@@ -34,7 +34,7 @@ const deleteByField = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { field, value, data } = req?.body;
+    const { field, value, data } = req?.body || {};
 
     if (!field || !value || !data) {
       return res.status(400).send({ message: 'required data not filled' });

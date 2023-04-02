@@ -80,10 +80,10 @@ const add = async (req, res) => {
                   : 'Men'
                 : player.data[0].gender == 'Female' &&
                   playerPartner.data[0].gender == 'Female'
-                ? team.ageGroup !== 'University' && team.ageGroup !== 'Staff'
-                  ? 'Girls'
-                  : 'Women'
-                : 'Mix',
+                  ? team.ageGroup !== 'University' && team.ageGroup !== 'Staff'
+                    ? 'Girls'
+                    : 'Women'
+                  : 'Mix',
             player: team.player,
             playerPartner: team.playerPartner,
             paymentMethod: team.paymentMethod,
@@ -116,7 +116,7 @@ const getAll = async (req, res) => {
 
 const deleteByField = async (req, res) => {
   try {
-    const { field, value } = req?.params;
+    const { field, value } = req?.params || {};
     if (!field || !value) {
       return res.status(400).send({ message: 'required data not filled' });
     }
@@ -128,7 +128,7 @@ const deleteByField = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { field, value, data } = req?.body;
+    const { field, value, data } = req?.body || {};
 
     if (!field || !value || !data) {
       return res.status(400).send({ message: 'required data not filled' });
