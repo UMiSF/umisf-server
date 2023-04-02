@@ -43,5 +43,5 @@ const companySchema = new Schema({
   },
 
 });
-companySchema.index( { email: 1 }, { unique: true } )
+companySchema.index( { email: 1 }, { unique: true } );
 module.exports = mongoose.model('Company', companySchema);
