@@ -5,7 +5,7 @@ const add = async (req, res) => {
     const { companyDetails, players } = req?.body;
     return await databaseWrapper.atomicDualCreate(
       { name: 'player', data: players },
-      { name: 'comapany', data: companyDetails },
+      { name: 'company', data: companyDetails },
       'players',
       res
     );

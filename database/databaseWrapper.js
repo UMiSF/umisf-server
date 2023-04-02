@@ -140,7 +140,7 @@ const createAndUpdate = async (insertData, updateData, res) => {
     console.log('Error during the transaction');
     await session.abortTransaction();
     await session.endSession();
-    return res.status(500).send({ message: 'Server error', error: e });
+    return res.status(500).send({ message: 'Server error', error: error });
   }
   await session.endSession();
   return true;
@@ -162,9 +162,8 @@ const atomicDualCreate = async (
     const secondCollectionData = dataForSecondCollection.data;
     session.startTransaction();
     let result = await schemas[firstCollection].insertMany(firstCollectionData);
-    console.log('result adding data 1:', result);
     if (result.length == 0) {
-      res.status(500).send({ message: 'Error in insert options provided' });
+      return res.status(500).send({ message: 'Error in insert options provided' });
     } else {
       result = arrangeResult(result);
       players = result.details;
@@ -173,15 +172,17 @@ const atomicDualCreate = async (
       finalResponse = await schemas[secondCollection].create(
         secondCollectionData
       );
+      console.log(finalResponse);
     }
   } catch (error) {
-    console.log('Error during the transaction');
+    console.log('Error during the transaction',error);
     await session.abortTransaction();
     await session.endSession();
-    res.status(500).send({ message: 'Server error', error: e });
+    res.status(500).send({ message: 'Server error', error: error });
   }
   await session.endSession();
-  res.status(201).send({
+  console.log('success', finalResponse)
+  return res.status(201).send({
     message: 'Data added successfully',
     data: finalResponse,
     players: players,
