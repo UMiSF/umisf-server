@@ -3,6 +3,7 @@ const databaseWrapper = require('../database/databaseWrapper');
 const add = async (req, res) => {
   try {
     const { data } = req.body;
+    const dataToSend = [];
     for (let i = 0; i < data.length; i++) {
       const team = data[i];
       if (
@@ -34,14 +35,12 @@ const add = async (req, res) => {
             ['_id'],
             [team.player]
           );
-
           const playerPartner = await databaseWrapper.read(
             'player',
             res,
             ['_id'],
             [team.playerPartner]
           );
-
           if (
             player.data == null ||
             player.data.length == 0 ||
@@ -70,39 +69,48 @@ const add = async (req, res) => {
               });
             }
           }
-
           //create the single and update the player's performance
           const teamData = {
             ageGroup: team.ageGroup,
             matchType:
-              player.data.gender == 'Male' &&
-              playerPartner.data.gender == 'Male'
-                ? 'Men'
-                : player.data.gender == 'Female' &&
-                  playerPartner.data.gender == 'Female'
-                ? 'Women'
+              player.data[0].gender == 'Male' &&
+              playerPartner.data[0].gender == 'Male'
+                ? team.ageGroup !== 'University' && team.ageGroup !== 'Staff'
+                  ? 'Boys'
+                  : 'Men'
+                : player.data[0].gender == 'Female' &&
+                  playerPartner.data[0].gender == 'Female'
+                ? team.ageGroup !== 'University' && team.ageGroup !== 'Staff'
+                  ? 'Girls'
+                  : 'Women'
                 : 'Mix',
             player: team.player,
+            playerPartner: team.playerPartner,
             paymentMethod: team.paymentMethod,
-            paymentSlip: team.paymentSlip != null ? single.paymentSlip : 'N/A',
-            paymentConfirmed: team.paymentConfirmed,
-            paymentApprover: team.paymentApprover,
+            paymentSlip: team.paymentSlip != null ? team.paymentSlip : 'N/A',
           };
-          await databaseWrapper.add('double', teamData, res);
+          if (team.paymentConfirmed) {
+            teamData['paymentSlip'] = team.paymentConfirmed;
+          }
+
+          if (team.paymentApprover) {
+            teamData['paymentApprover'] = team.paymentApprover;
+          }
+
+          dataToSend.push(teamData);
         } else {
           return res.status(400).send({ message: 'Invalid Player ID' });
         }
       }
     }
-    return res.status(201).send({ message: 'Singles created successfully' });
+    return await databaseWrapper.add('double', dataToSend, res);
   } catch (error) {
-    console.log('Error adding single', error);
     return res.status(500).send({ message: 'Internal Server Error' });
   }
 };
 
 const getAll = async (req, res) => {
-  const result = await databaseWrapper.read('double', res);
+  const result = await databaseWrapper.readDoubles('double', res);
   return res.status(201).send({ message: result.message, data: result.data });
 };
 
