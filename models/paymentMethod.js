@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const ageGroupSchema = mongoose.Schema({
+const paymentMethodSchema = mongoose.Schema({
     methodType: {
         type: String,
         required: true
     }
 });
 
-exports.AgeGroup = mongoose.model('AgeGroup',ageGroupSchema)
+exports.paymentMethod = mongoose.model('PaymentMethod',paymentMethodSchema)
