@@ -1,6 +1,7 @@
 const databaseWrapper = require("../database/databaseWrapper");
 
 const addPlayer = async (req, res) => {
+  //TODO: email the player id
   const { playerData } = req.body;
   for (let i = 0; i < playerData.length; i++) {
     const player = playerData[i];
@@ -50,9 +51,27 @@ const updatePlayer = async (req, res) => {
   }
 };
 
+const getPlayerByObjectId = async (req, res) => {
+
+  const { value } = req?.params;
+  console.log("Value: ", value)
+  //check whether a valid object id
+  if (databaseWrapper.isValidObjectId(value)) {
+    const player = await databaseWrapper.read("player", res, ["_id"], [value]);
+    if (player.data == null || player.data.length == 0) {
+      return res.status(400).send({ message:"Invalid Player ID. Register as a player first"});
+    } else {
+      return res.status(201).send({ message: player.message, data: player.data });
+    }
+  } else {
+    return res.status(400).send({ message:"Invalid Player ID"});
+  }
+};
+
 module.exports = {
   addPlayer,
   getAllPlayers,
   deleteByField,
   updatePlayer,
+  getPlayerByObjectId
 };

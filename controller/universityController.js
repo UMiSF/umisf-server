@@ -1,6 +1,7 @@
 const databaseWrapper = require("../database/databaseWrapper");
 
 const addUniversity = async (req, res) => {
+  //TODO: email the IDs
   try {
     const {universityDetails, players} = req?.body;
     return await databaseWrapper.atomicDualCreate({name:'player', data:players}, {name:'university', data:universityDetails}, 'players',res)

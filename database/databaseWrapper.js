@@ -118,18 +118,22 @@ const createAndUpdate = async (insertData, updateData, res) => {
 const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection, reuseField, res) => {
   const session = await mongoose.startSession();
   let finalResponse = null;
+  let players = null
   try {
     const firstCollection = dataForFirstCollection.name;
     const firstCollectionData = dataForFirstCollection.data;
     const secondCollection = dataForSecondCollection.name;
     const secondCollectionData = dataForSecondCollection.data;
     session.startTransaction();
-    const result = await schemas[firstCollection].insertMany(firstCollectionData, { rawResult: true });
+    let result = await schemas[firstCollection].insertMany(firstCollectionData);
     console.log("result adding data 1:", result)
-    if (!result.acknowledged) {
+    if (result.length == 0) {
       res.status(500).send({message:"Error in insert options provided"});
     } else {
+      result = arrangeResult(result)
+      players = result.details
       secondCollectionData[reuseField] = Object.values(result.insertedIds);
+      console.log(secondCollectionData)
       finalResponse = await schemas[secondCollection].create(secondCollectionData);
     }
   } catch (error) {
@@ -139,8 +143,17 @@ const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection,
     res.status(500).send({ message: "Server error", error: e });
   }
   await session.endSession();
-  res.status(201).send({ messsage: "Data added successfully", data: finalResponse });
+  res.status(201).send({ message: "Data added successfully", data: finalResponse, players:players });
 };
+
+function arrangeResult(result) {
+  temp = { insertedIds: [], details: [] };
+  for (const res of result) {
+    temp.insertedIds.push(res._id);
+    temp.details.push(res._id + " : " + res.firstName + " | " + res.lastName);
+  }
+  return temp;
+}
 
 module.exports = {
   add,
