@@ -21,13 +21,17 @@ app.use(express.static("public"));
 const PORT = process.env.PORT || 3001;
 
 /* ROUTES */
-const playerRouter = require("./router/playerRouter");
-const singleRouter = require("./router/singleRouter");
-const universityRouter = require("./router/universityRouter");
+const doubleRouter = require('./router/doubleRouter');
+const companyRouter = require('./router/companyRouter');
+const playerRouter = require('./router/playerRouter');
+const singleRouter = require('./router/singleRouter');
+const universityRouter = require('./router/universityRouter');
 
-app.use("/player", playerRouter);
-app.use("/single", singleRouter);
-app.use("/university", universityRouter);
+app.use('/double', doubleRouter);
+app.use('/company', companyRouter);
+app.use('/player', playerRouter);
+app.use('/single', singleRouter);
+app.use('/university', universityRouter);
 
 app.get(api + "/", (req, res) => {
   res.send("UMiSF API Started");
