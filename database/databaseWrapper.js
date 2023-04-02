@@ -34,7 +34,9 @@ const schemas = {
 const add = async (collectionName, data, res) => {
   try {
     const dbResponse = await schemas[collectionName].create(data);
-    res.status(201).send({ message: 'New Data has been added', data: dbResponse });
+    return res
+      .status(201)
+      .send({ message: 'New Data has been added', data: dbResponse });
   } catch (e) {
     res.status(500).send({ message: 'Server error', error: e });
   }
@@ -45,7 +47,9 @@ const remove = async (collectionName, field, value, res) => {
     const filter = {};
     filter[field] = value;
     const dbResponse = await schemas[collectionName].findOneAndDelete(filter);
-    res.status(200).send({ message: 'Data deleted successfully', data: dbResponse });
+    res
+      .status(200)
+      .send({ message: 'Data deleted successfully', data: dbResponse });
   } catch (e) {
     res.status(500).send({ message: 'Server error', error: e });
   }
@@ -55,13 +59,19 @@ const update = async (collectionName, field, value, data, res) => {
   try {
     const filter = {};
     filter[field] = value;
-    const dbResponse = await schemas[collectionName].findOneAndUpdate(filter, data, {
-      new: true,
-    });
+    const dbResponse = await schemas[collectionName].findOneAndUpdate(
+      filter,
+      data,
+      {
+        new: true,
+      }
+    );
     if (dbResponse == null) {
       return res.status(400).send('Invalid Inputs. Records not found');
     } else {
-      res.status(201).send({ message: 'Data has been updated', data: dbResponse });
+      res
+        .status(201)
+        .send({ message: 'Data has been updated', data: dbResponse });
     }
   } catch (e) {
     res.status(500).send({ message: 'Server error', error: e });
@@ -75,6 +85,24 @@ const read = async (collectionName, res, field = [], values = []) => {
       filter[field[i]] = { $in: values[i] };
     }
     const dbResponse = await schemas[collectionName].find(filter);
+    console.log(dbResponse);
+    return { message: 'Data retrieved successfully', data: dbResponse };
+  } catch (e) {
+    console.error(e);
+    res.status(500).send({ message: 'Server error', error: e });
+  }
+};
+
+const readDoubles = async (collectionName, res, field = [], values = []) => {
+  try {
+    const filter = {};
+    for (let i = 0; i < field.length; i++) {
+      filter[field[i]] = { $in: values[i] };
+    }
+    const dbResponse = await schemas[collectionName]
+      .find(filter)
+      .populate('player')
+      .populate('playerPartner');
     return { message: 'Data retrieved successfully', data: dbResponse };
   } catch (e) {
     console.error(e);
@@ -103,7 +131,10 @@ const createAndUpdate = async (insertData, updateData, res) => {
     const filterField = updateData.filterField;
     session.startTransaction();
     const result = await schemas[insertCollection].create(toInsertData);
-    await schemas[updateCollection].findOneAndUpdate({ _id: result[filterField].toString() }, toUpdateData);
+    await schemas[updateCollection].findOneAndUpdate(
+      { _id: result[filterField].toString() },
+      toUpdateData
+    );
     await session.commitTransaction();
   } catch (error) {
     console.log('Error during the transaction');
@@ -115,7 +146,12 @@ const createAndUpdate = async (insertData, updateData, res) => {
   return true;
 };
 
-const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection, reuseField, res) => {
+const atomicDualCreate = async (
+  dataForFirstCollection,
+  dataForSecondCollection,
+  reuseField,
+  res
+) => {
   const session = await mongoose.startSession();
   let finalResponse = null;
   let players = null;
@@ -126,24 +162,31 @@ const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection,
     const secondCollectionData = dataForSecondCollection.data;
     session.startTransaction();
     let result = await schemas[firstCollection].insertMany(firstCollectionData);
-    console.log('result adding data 1:', result);
     if (result.length == 0) {
-      res.status(500).send({message:'Error in insert options provided'});
+      return res.status(500).send({ message: 'Error in insert options provided' });
     } else {
       result = arrangeResult(result);
       players = result.details;
       secondCollectionData[reuseField] = Object.values(result.insertedIds);
       console.log(secondCollectionData);
-      finalResponse = await schemas[secondCollection].create(secondCollectionData);
+      finalResponse = await schemas[secondCollection].create(
+        secondCollectionData
+      );
+      console.log(finalResponse);
     }
   } catch (error) {
-    console.log('Error during the transaction');
+    console.log('Error during the transaction',error);
     await session.abortTransaction();
     await session.endSession();
     res.status(500).send({ message: 'Server error', error: error });
   }
   await session.endSession();
-  res.status(201).send({ message: 'Data added successfully', data: finalResponse, players:players });
+  console.log('success', finalResponse);
+  return res.status(201).send({
+    message: 'Data added successfully',
+    data: finalResponse,
+    players: players,
+  });
 };
 
 function arrangeResult(result) {
@@ -164,4 +207,5 @@ module.exports = {
   getAllFields,
   createAndUpdate,
   atomicDualCreate,
+  readDoubles,
 };

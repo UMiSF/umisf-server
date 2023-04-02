@@ -39,17 +39,12 @@ const doubleSchema = new Schema({
   paymentConfirmed: {
     type: Boolean,
   },
-  hasPaymentDone: {
-    type: Boolean,
-    required: true,
-  },
   paymentSlip: {
     type: String,
   },
   paymentApprover: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
   },
 });
 
