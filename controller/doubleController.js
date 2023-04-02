@@ -3,6 +3,7 @@ const databaseWrapper = require('../database/databaseWrapper');
 const add = async (req, res) => {
   try {
     const { data } = req.body;
+    console.log("double: ", data)
     const dataToSend = [];
     for (let i = 0; i < data.length; i++) {
       const team = data[i];
@@ -23,10 +24,10 @@ const add = async (req, res) => {
           const validateArray = Object.keys(team).filter((field) => {
             return !databaseWrapper.getAllFields('double').includes(field);
           });
-          if (validateArray.length !== 0) {
+          if (validateArray.length !== 0 && validateArray.length == 1 && team.pastPerformance == undefined) {
             return res
               .status(400)
-              .send({ message: 'Invalid field for schema -> Single' });
+              .send({ message: 'Invalid field for schema -> Double' });
           }
           //check whether the player has registered
           const player = await databaseWrapper.read(
@@ -52,23 +53,24 @@ const add = async (req, res) => {
             });
           }
 
-          if (team.paymentApprover) {
-            const paymentApprover = await databaseWrapper.read(
-              'user',
-              res,
-              ['_id'],
-              [team.paymentApprover]
-            );
+          // if (team.paymentApprover) {
+          //   const paymentApprover = await databaseWrapper.read(
+          //     'user',
+          //     res,
+          //     ['_id'],
+          //     [team.paymentApprover]
+          //   );
 
-            if (
-              paymentApprover.data == null ||
-              paymentApprover.data.length == 0
-            ) {
-              return res.status(400).send({
-                message: 'Invalid Payment approver IDs.',
-              });
-            }
-          }
+          //   if (
+          //     paymentApprover.data == null ||
+          //     paymentApprover.data.length == 0
+          //   ) {
+          //     return res.status(400).send({
+          //       message: 'Invalid Payment approver IDs.',
+          //     });
+          //   }
+          // }
+          
           //create the single and update the player's performance
           const teamData = {
             ageGroup: team.ageGroup,

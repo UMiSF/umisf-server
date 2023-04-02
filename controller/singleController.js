@@ -3,6 +3,7 @@ const databaseWrapper = require("../database/databaseWrapper");
 const addSingle = async (req, res) => {
   try {
     const { singleData } = req.body;
+    console.log(singleData)
     for (let i = 0; i < singleData.length; i++) {
       const single = singleData[i];
       if (!single.ageGroup || !single.player || !single.paymentMethod) {
@@ -14,7 +15,7 @@ const addSingle = async (req, res) => {
           const validateArray = Object.keys(single).filter((field) => {
             return !databaseWrapper.getAllFields("single").includes(field);
           });
-          if (validateArray.length != 0 && validateArray.length == 1 && single.pastPerformance == null) {
+          if (validateArray.length != 0 && validateArray.length == 1 && single.pastPerformance == undefined) {
             return res.status(400).send({message:"Invalid field for schema -> Single"});
           }
           //check whether the player has registered
