@@ -181,7 +181,7 @@ const atomicDualCreate = async (
     res.status(500).send({ message: 'Server error', error: error });
   }
   await session.endSession();
-  console.log('success', finalResponse)
+  console.log('success', finalResponse);
   return res.status(201).send({
     message: 'Data added successfully',
     data: finalResponse,
@@ -190,7 +190,7 @@ const atomicDualCreate = async (
 };
 
 function arrangeResult(result) {
-  temp = { insertedIds: [], details: [] };
+  const temp = { insertedIds: [], details: [] };
   for (const res of result) {
     temp.insertedIds.push(res._id);
     temp.details.push(res._id + ' : ' + res.firstName + ' | ' + res.lastName);
