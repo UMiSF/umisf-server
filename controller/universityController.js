@@ -47,6 +47,8 @@ const updateUniversity = async (req, res) => {
   }
 };
 
+// load the universities that are {not confirmed} the payments and approve
+
 module.exports = {
   addUniversity,
   getAllUniversities,

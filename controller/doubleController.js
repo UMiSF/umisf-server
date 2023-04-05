@@ -149,6 +149,11 @@ const update = async (req, res) => {
   }
 };
 
+// we should load the doubles which payment is not confirmed + bank transfer
+// then check the payment slip and approve the payment
+// before approval proceed it should check whether this person appears in single as a { player + payment not confirmed } and then update the double also only if he wants to update the single 
+// this will not only load bank transfers. Both on-site and trasnfers. UI should have the filter methods 
+
 module.exports = {
   add,
   getAll,

@@ -51,6 +51,9 @@ const update = async (req, res) => {
   }
 };
 
+// load the companies that are {not confirmed} the payments and approve
+// this will not only load bank transfers. Both on-site and trasnfers. UI should have the filter methods 
+
 module.exports = {
   add,
   getAll,

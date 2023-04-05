@@ -27,6 +27,7 @@ const playerRouter = require('./router/playerRouter');
 const singleRouter = require('./router/singleRouter');
 const universityRouter = require('./router/universityRouter');
 const feedbackRouter = require('./router/feedbackRouter');
+const userRouter = require('./router/userRouter')
 
 app.use('/double', doubleRouter);
 app.use('/company', companyRouter);
@@ -34,6 +35,7 @@ app.use('/player', playerRouter);
 app.use('/single', singleRouter);
 app.use('/university', universityRouter);
 app.use('/feedbacks', feedbackRouter);
+app.use('/user', userRouter)
 
 app.get(api + "/", (req, res) => {
   res.send("UMiSF API Started");

@@ -72,6 +72,8 @@ const getPlayerByObjectId = async (req, res) => {
   }
 };
 
+//there should be a method to get a player by generic fields
+
 module.exports = {
   addPlayer,
   getAllPlayers,

@@ -61,7 +61,7 @@ const update = async (collectionName, field, value, data, res) => {
       new: true,
     });
     if (dbResponse == null) {
-      return res.status(400).send("Invalid Inputs. Records not found");
+      return res.status(400).send({message:"Invalid Inputs. Records not found"});
     } else {
       res.status(201).send({ message: 'Data has been updated', data: dbResponse });
     }

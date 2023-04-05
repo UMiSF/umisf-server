@@ -27,3 +27,9 @@
 
 //sub tournments in the tournament
 //age group contains university, company too
+
+
+// first add users
+// payments -> select event + age group + payement status and load
+// approve/decline
+//schema update

@@ -90,6 +90,11 @@ const updateSingle = async (req, res) => {
   }
 };
 
+// we should load the singles with option provided age group/all
+// then check the payment slip and approve the payment
+// before approval proceed it should check whether this person appears in doubles as a { player + payment not confirmed } and then update the double also only if he wants to update the double 
+// this will not only load bank transfers. Both on-site and trasnfers. UI should have the filter methods 
+
 module.exports = {
   addSingle,
   getAllSingles,
