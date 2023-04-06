@@ -3,6 +3,7 @@ const universityController = require("../controller/universityController");
 const router = express.Router();
 
 router.get("/getAll", universityController.getAllUniversities);
+router.get('/getFilteredData', universityController.getFilteredData);
 
 router.post("/add", universityController.addUniversity);
 

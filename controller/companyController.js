@@ -51,12 +51,25 @@ const update = async (req, res) => {
   }
 };
 
-// load the companies that are {not confirmed} the payments and approve
-// this will not only load bank transfers. Both on-site and trasnfers. UI should have the filter methods 
+const getFilteredData = async (req, res) => {
+  try {
+    const data = req.query;
 
+    if (data != null && data.paymentConfirmed != null) {
+      data.paymentConfirmed = parseInt(data.paymentConfirmed);
+    }
+    console.log('Data', data);
+    const result = await databaseWrapper.read('company', res, Object.keys(data), Object.values(data));
+    return res.status(201).send({ message: 'Data retrieved successfully', data: result.data });
+  } catch (error) {
+    console.log('Error: ', error);
+    return res.status(400).send({ message: 'Bad Request', error: error });
+  }
+};
 module.exports = {
   add,
   getAll,
   deleteByField,
   update,
+  getFilteredData
 };

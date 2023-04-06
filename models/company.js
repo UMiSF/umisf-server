@@ -9,7 +9,7 @@ const companySchema = new Schema({
   matchType: {
     type: String,
     required: true,
-    enum: ['Men', 'Women'],
+    enum: ['A Division', 'B Division'],
   },
   players: [
     {
@@ -24,16 +24,17 @@ const companySchema = new Schema({
     enum: ['On-site', 'Bank Transfer'],
   },
   paymentConfirmed: {
-    type: Boolean,
-    default:false
+    type: Number,
+    default: 0,
+    enum: [-1, 0, 1],
   },
   paymentSlip: {
     type: String,
   },
   paymentApprover: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    
+    type: String,
+    default: 'N/A'
+  
   },
   contactNumber: {
     type: String,
@@ -43,7 +44,6 @@ const companySchema = new Schema({
     type: String,
     required: true,
   },
-
 });
-companySchema.index( { email: 1 }, { unique: true } )
+companySchema.index({ email: 1 }, { unique: true });
 module.exports = mongoose.model('Company', companySchema);

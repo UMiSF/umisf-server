@@ -1,19 +1,19 @@
-const playerSchema = require("../models/player");
-const singleSchema = require("../models/single");
-const ageGroupSchema = require("../models/ageGroup");
-const captainSchema = require("../models/captain");
-const companySchema = require("../models/company");
-const doubleSchema = require("../models/double");
-const matchForDrawSchema = require("../models/matchForDraw");
-const matchResultSchema = require("../models/matchResult");
-const subTournementSchema = require("../models/subTournement");
-const teamRoundSchema = require("../models/teamRound");
-const tournementSchema = require("../models/tournement");
-const universitySchema = require("../models/university");
-const userSchema = require("../models/user");
-const yearlyConfigurationsSchema = require("../models/yearlyConfigurations");
+const playerSchema = require('../models/player');
+const singleSchema = require('../models/single');
+const ageGroupSchema = require('../models/ageGroup');
+const captainSchema = require('../models/captain');
+const companySchema = require('../models/company');
+const doubleSchema = require('../models/double');
+const matchForDrawSchema = require('../models/matchForDraw');
+const matchResultSchema = require('../models/matchResult');
+const subTournementSchema = require('../models/subTournement');
+const teamRoundSchema = require('../models/teamRound');
+const tournementSchema = require('../models/tournement');
+const universitySchema = require('../models/university');
+const userSchema = require('../models/user');
+const yearlyConfigurationsSchema = require('../models/yearlyConfigurations');
 const feedbackSchema = require('../models/feedback');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const schemas = {
   player: playerSchema,
@@ -38,7 +38,7 @@ const add = async (collectionName, data, res) => {
     const dbResponse = await schemas[collectionName].create(data);
     return res.status(201).send({ message: 'New Data has been added', data: dbResponse });
   } catch (e) {
-    res.status(500).send({ message: "Server error", error: e });
+    res.status(500).send({ message: 'Server error', error: e });
   }
 };
 
@@ -49,7 +49,7 @@ const remove = async (collectionName, field, value, res) => {
     const dbResponse = await schemas[collectionName].findOneAndDelete(filter);
     res.status(200).send({ message: 'Data deleted successfully', data: dbResponse });
   } catch (e) {
-    res.status(500).send({ message: "Server error", error: e });
+    res.status(500).send({ message: 'Server error', error: e });
   }
 };
 
@@ -61,23 +61,33 @@ const update = async (collectionName, field, value, data, res) => {
       new: true,
     });
     if (dbResponse == null) {
-      return res.status(400).send({message:"Invalid Inputs. Records not found"});
+      return res.status(400).send({ message: 'Invalid Inputs. Records not found' });
     } else {
       res.status(201).send({ message: 'Data has been updated', data: dbResponse });
     }
   } catch (e) {
-    res.status(500).send({ message: "Server error", error: e });
+    res.status(500).send({ message: 'Server error', error: e });
   }
 };
 
-const read = async (collectionName, res, field = [], values = []) => {
+const read = async (collectionName, res, field = [], values = [], populate = false, path = '', select = '') => {
   try {
     const filter = {};
     for (let i = 0; i < field.length; i++) {
       filter[field[i]] = { $in: values[i] };
     }
-    const dbResponse = await schemas[collectionName].find(filter);
-    //console.log(dbResponse);
+    let dbResponse = null;
+    if (!populate) {
+      dbResponse = await schemas[collectionName].find(filter);
+      return { message: 'Data retrieved successfully', data: dbResponse };
+    } else {
+      console.log('populated', path, select);
+      dbResponse = await schemas[collectionName].find(filter).populate({
+        path: path,
+      });
+    }
+
+    console.log('DbRes:', dbResponse);
     return { message: 'Data retrieved successfully', data: dbResponse };
   } catch (e) {
     console.error(e);
@@ -95,7 +105,7 @@ const readDoubles = async (collectionName, res, field = [], values = []) => {
     return { message: 'Data retrieved successfully', data: dbResponse };
   } catch (e) {
     console.error(e);
-    res.status(500).send({ message: "Server error", error: e });
+    res.status(500).send({ message: 'Server error', error: e });
   }
 };
 
@@ -123,10 +133,10 @@ const createAndUpdate = async (insertData, updateData, res) => {
     await schemas[updateCollection].findOneAndUpdate({ _id: result[filterField].toString() }, toUpdateData);
     await session.commitTransaction();
   } catch (error) {
-    console.log("Error during the transaction");
+    console.log('Error during the transaction');
     await session.abortTransaction();
     await session.endSession();
-    return res.status(500).send({ message: "Server error", error: e });
+    return res.status(500).send({ message: 'Server error', error: e });
   }
   await session.endSession();
   return true;
@@ -135,7 +145,7 @@ const createAndUpdate = async (insertData, updateData, res) => {
 const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection, reuseField, res) => {
   const session = await mongoose.startSession();
   let finalResponse = null;
-  let players = null
+  let players = null;
   try {
     const firstCollection = dataForFirstCollection.name;
     const firstCollectionData = dataForFirstCollection.data;
@@ -146,8 +156,8 @@ const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection,
     if (result.length == 0) {
       return res.status(500).send({ message: 'Error in insert options provided' });
     } else {
-      result = arrangeResult(result)
-      players = result.details
+      result = arrangeResult(result);
+      players = result.details;
       secondCollectionData[reuseField] = Object.values(result.insertedIds);
       console.log(secondCollectionData);
       finalResponse = await schemas[secondCollection].create(secondCollectionData);
@@ -157,7 +167,7 @@ const atomicDualCreate = async (dataForFirstCollection, dataForSecondCollection,
     console.log('Error during the transaction', error);
     await session.abortTransaction();
     await session.endSession();
-    res.status(500).send({ message: "Server error", error: e });
+    res.status(500).send({ message: 'Server error', error: e });
   }
   await session.endSession();
   console.log('success', finalResponse);
@@ -172,7 +182,7 @@ function arrangeResult(result) {
   temp = { insertedIds: [], details: [] };
   for (const res of result) {
     temp.insertedIds.push(res._id);
-    temp.details.push(res._id + " : " + res.firstName + " | " + res.lastName);
+    temp.details.push(res._id + ' : ' + res.firstName + ' | ' + res.lastName);
   }
   return temp;
 }

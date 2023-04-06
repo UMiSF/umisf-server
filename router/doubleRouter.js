@@ -3,6 +3,7 @@ const doubleController = require('../controller/doubleController');
 const router = express.Router();
 
 router.get('/getAll', doubleController.getAll);
+router.get('/getFilteredData', doubleController.getFilteredData)
 
 router.post('/add', doubleController.add);
 

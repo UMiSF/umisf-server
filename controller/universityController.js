@@ -47,11 +47,26 @@ const updateUniversity = async (req, res) => {
   }
 };
 
-// load the universities that are {not confirmed} the payments and approve
+const getFilteredData = async (req, res) => {
+  try {
+    const data = req.query;
+
+    if (data != null && data.paymentConfirmed != null) {
+      data.paymentConfirmed = parseInt(data.paymentConfirmed);
+    }
+    console.log('Data', data);
+    const result = await databaseWrapper.read('university', res, Object.keys(data), Object.values(data));
+    return res.status(201).send({ message: 'Data retrieved successfully', data: result.data });
+  } catch (error) {
+    console.log('Error: ', error);
+    return res.status(400).send({ message: 'Bad Request', error: error });
+  }
+};
 
 module.exports = {
   addUniversity,
   getAllUniversities,
   deleteByField,
   updateUniversity,
+  getFilteredData
 };

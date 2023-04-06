@@ -149,14 +149,25 @@ const update = async (req, res) => {
   }
 };
 
-// we should load the doubles which payment is not confirmed + bank transfer
-// then check the payment slip and approve the payment
-// before approval proceed it should check whether this person appears in single as a { player + payment not confirmed } and then update the double also only if he wants to update the single 
-// this will not only load bank transfers. Both on-site and trasnfers. UI should have the filter methods 
+const getFilteredData = async (req, res) => {
+  try {
+    const data = req.query;
 
+    if (data != null && data.paymentConfirmed != null) {
+      data.paymentConfirmed = parseInt(data.paymentConfirmed);
+    }
+    console.log('Data', data);
+    const result = await databaseWrapper.read('double', res, Object.keys(data), Object.values(data), true, 'player', 'email');
+    return res.status(201).send({ message: 'Data retrieved successfully', data: result.data });
+  } catch (error) {
+    console.log('Error: ', error);
+    return res.status(400).send({ message: 'Bad Request', error: error });
+  }
+};
 module.exports = {
   add,
   getAll,
   deleteByField,
   update,
+  getFilteredData
 };

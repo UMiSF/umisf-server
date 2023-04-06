@@ -24,15 +24,16 @@ const universitySchema = new Schema({
     enum: ['On-site', 'Bank Transfer'],
   },
   paymentConfirmed: {
-    type: Boolean,
-    default:false
+    type: Number,
+    default: 1,
+    enum: [-1, 0, 1],
   },
   paymentSlip: {
     type: String,
   },
   paymentApprover: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
+    default: 'N/A'
     
   },
   contactNumber: {
