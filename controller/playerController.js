@@ -1,8 +1,13 @@
 const databaseWrapper = require("../database/databaseWrapper");
 
+
 const addPlayer = async (req, res) => {
   //TODO: email the player id
-  const { playerData } = req.body;
+  const { playerData,image } = req.body;
+  console.log(req.body);
+  if(image){
+    console.log(image.length);
+  }
   for (let i = 0; i < playerData.length; i++) {
     const player = playerData[i];
     if (!player.firstName || !player.lastName || !player.institute || !player.performanceThreshold || !player.gender || !player.contactNumber || !player.photo) {

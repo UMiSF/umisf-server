@@ -70,6 +70,23 @@ const update = async (collectionName, field, value, data, res) => {
   }
 };
 
+const updateWithoutReturn = async (collectionName, field, value, data) => {
+  try {
+    const filter = {};
+    filter[field] = value;
+    const dbResponse = await schemas[collectionName].findOneAndUpdate(filter, data, {
+      new: true,
+    });
+    if (dbResponse == null) {
+      return false;
+    } else {
+      return true;
+    }
+  } catch (e) {
+    return false;
+  }
+};
+
 const read = async (collectionName, res, field = [], values = [], populate = false, path = '', select = '') => {
   try {
     const filter = {};
@@ -197,4 +214,5 @@ module.exports = {
   createAndUpdate,
   atomicDualCreate,
   readDoubles,
+  updateWithoutReturn
 };
