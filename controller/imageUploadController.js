@@ -34,7 +34,7 @@ const uploadMultipleFiles = async (req,res) => {
 
     try{
 
-        const count = images.length();
+        const count = images.length;
         if(images.length !== count || playerIds.length !== count){
             return res.status(400).send({message: "data do not have same length"});
         }
@@ -61,6 +61,8 @@ const uploadMultipleFiles = async (req,res) => {
     }
        
 }
+
+
 
 module.exports = {
     uploadImage,

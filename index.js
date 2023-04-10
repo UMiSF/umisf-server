@@ -30,7 +30,7 @@ const singleRouter = require('./router/singleRouter');
 const universityRouter = require('./router/universityRouter');
 const feedbackRouter = require('./router/feedbackRouter');
 const userRouter = require('./router/userRouter');
-const photoRouter = require('./router/photoRouter')
+const photoRouter = require('./router/photoRouter');
 const imageUploadRouter = require('./router/imageUploadRouter');
 
 app.use('/double', doubleRouter);
@@ -40,7 +40,7 @@ app.use('/single', singleRouter);
 app.use('/university', universityRouter);
 app.use('/feedbacks', feedbackRouter);
 app.use('/user', userRouter);
-//app.use('/photo',photoRouter);;
+app.use('/photo',photoRouter);
 app.use('/image', imageUploadRouter);
 
 app.get(api + "/", (req, res) => {

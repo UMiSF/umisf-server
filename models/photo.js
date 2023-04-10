@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const photoSchema = new Schema({
 
   year: {
-    type: Date,
+    type: String,
     required: true,
   },
   photos:[
