@@ -44,6 +44,9 @@ const universitySchema = new Schema({
     type: String,
     required: true,
   },
+  year:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model('University', universitySchema);

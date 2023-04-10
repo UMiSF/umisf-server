@@ -70,6 +70,9 @@ const subTournementSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Player',
   },
+  year:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model('SubTournement', subTournementSchema);

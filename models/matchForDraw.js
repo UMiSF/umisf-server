@@ -84,6 +84,9 @@ const matchForDrawSchema = new Schema({
   stadium: {
     type: String,
   },
+  year:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model('MatchForDraw', matchForDrawSchema);

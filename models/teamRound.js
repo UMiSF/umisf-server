@@ -168,5 +168,8 @@ const teamRoundSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  year:{
+    type:String
+  }
 });
 module.exports = mongoose.model('TeamRound', teamRoundSchema);

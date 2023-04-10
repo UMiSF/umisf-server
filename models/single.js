@@ -34,6 +34,9 @@ const singleSchema = new Schema({
     type: String,
     default: 'N/A'
   },
+  year:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model('Single', singleSchema);
