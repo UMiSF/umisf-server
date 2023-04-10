@@ -19,20 +19,26 @@ const playerSchema = new Schema({
   },
   pastPerformanceSingle: [
     {
-      description: {
+      name: {
         type: String,
       },
-      proof: {
+      level: {
+        type: String,
+      },
+      place: {
         type: String,
       },
     },
   ],
   pastPerformanceDouble: [
     {
-      description: {
+      name: {
         type: String,
       },
-      proof: {
+      level: {
+        type: String,
+      },
+      place: {
         type: String,
       },
     },
