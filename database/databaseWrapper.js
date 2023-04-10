@@ -13,6 +13,7 @@ const universitySchema = require('../models/university');
 const userSchema = require('../models/user');
 const yearlyConfigurationsSchema = require('../models/yearlyConfigurations');
 const feedbackSchema = require('../models/feedback');
+const photoSchema = require('../models/photo');
 const mongoose = require('mongoose');
 
 const schemas = {
@@ -31,6 +32,7 @@ const schemas = {
   user: userSchema,
   yearlyConfigurations: yearlyConfigurationsSchema,
   feedback: feedbackSchema,
+  photo: photoSchema,
 };
 
 const add = async (collectionName, data, res) => {

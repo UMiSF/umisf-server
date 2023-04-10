@@ -6,17 +6,17 @@ const tournementSchema = new Schema({
     type: Number,
     required: true,
   },
-  pictures: [
-    {
-      description: {
-        type: String,
-      },
-      picture: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  // pictures: [
+  //   {
+  //     description: {
+  //       type: String,
+  //     },
+  //     picture: {
+  //       type: String,
+  //       required: true,
+  //     },
+  //   },
+  // ],
   flyers: [
     {
       description: {
