@@ -64,13 +64,13 @@ const loginUser = async (req, res) => {
   try{
     const {email, password, role} = req?.body
     const user = await databaseWrapper.read('user', res, ['email'], [email]);
-
-    if (user.data?.length == 0){
+    
+    if (user.data?.length === 0){
       return res.status(400).send({ message: 'Email is not valid.' });
     }
 
     if (! user.data[0].role.includes(role)){
-      return res.status(400).send({ message: `This user currently does nt have rights for the selected role.` });
+      return res.status(400).send({ message: "This user currently does n't have rights for the selected role." });
     }
 
     bcrypt.compare(password, user.data[0].password, function(err, result){
