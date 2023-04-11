@@ -63,6 +63,9 @@ const playerSchema = new Schema({
   photo: {
     type: String,
   },
+  year:{
+    type:String
+  }
 });
 
 playerSchema.index({ contactNumber: 1 });

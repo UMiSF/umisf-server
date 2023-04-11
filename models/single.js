@@ -10,7 +10,7 @@ const singleSchema = new Schema({
   matchType: {
     type: String,
     required: true,
-    enum: ['Girls', 'Boys', 'Men', 'Women', 'Mix'],
+    enum: ['Girls', 'Boys', 'Men', 'Women'],
   },
   player: {
     type: mongoose.Schema.Types.ObjectId,

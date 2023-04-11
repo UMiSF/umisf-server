@@ -105,7 +105,7 @@ const getFilteredData = async (req, res) => {
       data.paymentConfirmed = parseInt(data.paymentConfirmed);
     }
     console.log('Data', data);
-    const result = await databaseWrapper.read('single', res, Object.keys(data), Object.values(data), true, 'player', 'email');
+    const result = await databaseWrapper.read('single', res, Object.keys(data), Object.values(data), true, 'player');
     return res.status(201).send({ message: 'Data retrieved successfully', data: result.data });
   } catch (error) {
     console.log('Error: ', error);

@@ -77,6 +77,18 @@ const getPlayerByObjectId = async (req, res) => {
   }
 };
 
+const getFilteredData = async (req, res) => {
+  try {
+    const data = req.query;
+    console.log('Data', data);
+    const result = await databaseWrapper.read('player', res, Object.keys(data), Object.values(data));
+    console.log("Result:", result)
+    return res.status(201).send({ message: 'Data retrieved successfully', data: result.data });
+  } catch (error) {
+    console.log('Error: ', error);
+    return res.status(400).send({ message: 'Bad Request', error: error });
+  }
+};
 //there should be a method to get a player by generic fields
 
 module.exports = {
@@ -84,5 +96,6 @@ module.exports = {
   getAllPlayers,
   deleteByField,
   updatePlayer,
-  getPlayerByObjectId
+  getPlayerByObjectId,
+  getFilteredData
 };

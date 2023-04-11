@@ -89,7 +89,7 @@ const updateWithoutReturn = async (collectionName, field, value, data) => {
   }
 };
 
-const read = async (collectionName, res, field = [], values = [], populate = false, path = '', select = '') => {
+const read = async (collectionName, res, field = [], values = [], populate = false, path = '') => {
   try {
     const filter = {};
     for (let i = 0; i < field.length; i++) {
@@ -100,7 +100,7 @@ const read = async (collectionName, res, field = [], values = [], populate = fal
       dbResponse = await schemas[collectionName].find(filter);
       return { message: 'Data retrieved successfully', data: dbResponse };
     } else {
-      console.log('populated', path, select);
+      console.log('populated', path);
       dbResponse = await schemas[collectionName].find(filter).populate({
         path: path,
       });

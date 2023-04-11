@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/getAll', playerController.getAllPlayers);
 router.get('/getByObjectId', playerController.getPlayerByObjectId);
+router.get('/getFilteredData', playerController.getFilteredData);
 
 router.post('/add', playerController.addPlayer);
 

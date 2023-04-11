@@ -3,51 +3,26 @@ const databaseWrapper = require('../database/databaseWrapper');
 const add = async (req, res) => {
   try {
     const { data } = req.body;
-    console.log("double: ", data)
+    console.log('double: ', data);
     const dataToSend = [];
     for (let i = 0; i < data.length; i++) {
       const team = data[i];
-      if (
-        !team.ageGroup ||
-        !team.player ||
-        !team.paymentMethod ||
-        !team.playerPartner
-      ) {
+      if (!team.ageGroup || !team.player || !team.paymentMethod || !team.playerPartner) {
         return res.status(400).send({ message: 'required data not filled' });
       } else {
         //check whether a valid object id
-        if (
-          databaseWrapper.isValidObjectId(team.player) &&
-          databaseWrapper.isValidObjectId(team.playerPartner)
-        ) {
+        if (databaseWrapper.isValidObjectId(team.player) && databaseWrapper.isValidObjectId(team.playerPartner)) {
           //check whether all the fields are valid
           const validateArray = Object.keys(team).filter((field) => {
             return !databaseWrapper.getAllFields('double').includes(field);
           });
           if (validateArray.length !== 0 && validateArray.length == 1 && team.pastPerformance == undefined) {
-            return res
-              .status(400)
-              .send({ message: 'Invalid field for schema -> Double' });
+            return res.status(400).send({ message: 'Invalid field for schema -> Double' });
           }
           //check whether the player has registered
-          const player = await databaseWrapper.read(
-            'player',
-            res,
-            ['_id'],
-            [team.player]
-          );
-          const playerPartner = await databaseWrapper.read(
-            'player',
-            res,
-            ['_id'],
-            [team.playerPartner]
-          );
-          if (
-            player.data == null ||
-            player.data.length == 0 ||
-            playerPartner.data == null ||
-            playerPartner.data.length == 0
-          ) {
+          const player = await databaseWrapper.read('player', res, ['_id'], [team.player]);
+          const playerPartner = await databaseWrapper.read('player', res, ['_id'], [team.playerPartner]);
+          if (player.data == null || player.data.length == 0 || playerPartner.data == null || playerPartner.data.length == 0) {
             return res.status(400).send({
               message: 'Invalid Player IDs. Register as a player first',
             });
@@ -70,22 +45,20 @@ const add = async (req, res) => {
           //     });
           //   }
           // }
-          
+
           //create the single and update the player's performance
           const teamData = {
             ageGroup: team.ageGroup,
             matchType:
-              player.data[0].gender == 'Male' &&
-              playerPartner.data[0].gender == 'Male'
+              player.data[0].gender == 'Male' && playerPartner.data[0].gender == 'Male'
                 ? team.ageGroup !== 'University' && team.ageGroup !== 'Staff'
                   ? 'Boys'
                   : 'Men'
-                : player.data[0].gender == 'Female' &&
-                  playerPartner.data[0].gender == 'Female'
-                  ? team.ageGroup !== 'University' && team.ageGroup !== 'Staff'
-                    ? 'Girls'
-                    : 'Women'
-                  : 'Mix',
+                : player.data[0].gender == 'Female' && playerPartner.data[0].gender == 'Female'
+                ? team.ageGroup !== 'University' && team.ageGroup !== 'Staff'
+                  ? 'Girls'
+                  : 'Women'
+                : 'Mix',
             player: team.player,
             playerPartner: team.playerPartner,
             paymentMethod: team.paymentMethod,
@@ -135,14 +108,30 @@ const update = async (req, res) => {
     if (!field || !value || !data) {
       return res.status(400).send({ message: 'required data not filled' });
     }
+    console.log(data)
+    if (data.playerPartner) {
+      console.log("Here")
+      if (!databaseWrapper.isValidObjectId(data.playerPartner)) {
+        console.log("Invalid ID")
+        return res.status(400).send({
+          message: 'Invalid Partner ID.',
+        });
+      } else {
+        const playerPartner = await databaseWrapper.read('player', res, ['_id'], [data.playerPartner]);
+        if (playerPartner.data == null || playerPartner.data.length == 0) {
+          return res.status(400).send({
+            message: 'The partner ID has not been registered yet.',
+          });
+        }
+      }
+    }
     const validateArray = Object.keys(data).filter((field) => {
       return !databaseWrapper.getAllFields('double').includes(field);
     });
     if (validateArray.length != 0) {
-      return res
-        .status(400)
-        .send({ message: 'Invalid field for schema -> double' });
+      return res.status(400).send({ message: 'Invalid field for schema -> double' });
     }
+
     return await databaseWrapper.update('double', field, value, data, res);
   } catch (e) {
     return res.status(400).send({ message: 'Bad Request', error: e });
@@ -157,7 +146,7 @@ const getFilteredData = async (req, res) => {
       data.paymentConfirmed = parseInt(data.paymentConfirmed);
     }
     console.log('Data', data);
-    const result = await databaseWrapper.read('double', res, Object.keys(data), Object.values(data), true, 'player', 'email');
+    const result = await databaseWrapper.read('double', res, Object.keys(data), Object.values(data), true, 'player');
     return res.status(201).send({ message: 'Data retrieved successfully', data: result.data });
   } catch (error) {
     console.log('Error: ', error);
@@ -169,5 +158,5 @@ module.exports = {
   getAll,
   deleteByField,
   update,
-  getFilteredData
+  getFilteredData,
 };
