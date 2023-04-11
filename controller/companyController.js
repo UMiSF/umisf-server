@@ -2,6 +2,7 @@ const databaseWrapper = require('../database/databaseWrapper');
 
 const add = async (req, res) => {
   try {
+    console.log('whaaaat');
     const { companyDetails, players } = req?.body || {};
     return await databaseWrapper.atomicDualCreate(
       { name: 'player', data: players },
