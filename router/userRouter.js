@@ -6,6 +6,7 @@ router.get('/getAll', userController.getAllUsers);
 // router.get('/getByObjectId', userController.getUserByObjectId);
 
 router.post('/add', userController.addUser);
+router.post('/login', userController.loginUser);
 
 router.delete('/removeByField/:field/:value', userController.deleteByField);
 

@@ -60,6 +60,31 @@ const updateUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  try{
+    const {email, password, role} = req?.body
+    const user = await databaseWrapper.read('user', res, ['email'], [email]);
+
+    if (user.data?.length == 0){
+      return res.status(400).send({ message: 'Email is not valid.' });
+    }
+
+    if (! user.data[0].role.includes(role)){
+      return res.status(400).send({ message: `This user currently does nt have rights for the selected role.` });
+    }
+
+    bcrypt.compare(password, user.data[0].password, function(err, result){
+      if(result){
+        return res.status(201).send({ message: 'Successfully Logged in', data: user.data[0]});
+      }else{
+        return res.status(400).send({ message: 'Password is wrong. Please check again.'});
+      }
+    })
+  }catch(e){
+    return res.status(400).send({ message: 'Bad Request', error: e });
+  }
+}
+
 // const getUserByObjectId = async (req, res) => {
 
 //   let { ids} = req?.query;
@@ -86,4 +111,5 @@ module.exports = {
   getAllUsers,
   deleteByField,
   updateUser,
+  loginUser
 };
