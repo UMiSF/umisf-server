@@ -96,6 +96,7 @@ const read = async (collectionName, res, field = [], values = [], populate = fal
       filter[field[i]] = { $in: values[i] };
     }
     let dbResponse = null;
+    
     if (!populate) {
       dbResponse = await schemas[collectionName].find(filter);
       return { message: 'Data retrieved successfully', data: dbResponse };

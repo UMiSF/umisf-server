@@ -59,8 +59,7 @@ const updatePlayer = async (req, res) => {
 const getPlayerByObjectId = async (req, res) => {
 
   let { ids} = req?.query;
- // console.log("IDs: ", ids)
-  ids = ids?.split(',')
+ console.log("IDs: ", ids)
   //console.log("IDs: ", ids)
 //  //check whether valid object ids
   const validations = ids.filter((value)=> {return databaseWrapper.isValidObjectId(value) == false})
