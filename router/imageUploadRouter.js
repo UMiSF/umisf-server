@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 router.post('/add', imageUploadController.uploadImage);
+router.post('/addMultiple', imageUploadController.uploadMultipleFiles)
 
 
 module.exports = router;

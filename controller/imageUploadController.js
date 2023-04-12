@@ -27,7 +27,9 @@ const uploadImage = async (req,res) => {
 }
 
 const uploadMultipleFiles = async (req,res) => {
-    const {images,playerIds} = req?.body;
+    console.log('uploading multiple files...');
+    const {images,playerIds,slip,companyId} = req?.body;
+    
     if(!images || !playerIds ){
         return res.status(400).send({message: "required fields are not set"});
     }
@@ -40,23 +42,44 @@ const uploadMultipleFiles = async (req,res) => {
         }
 
         for(let i = 0; i < count; i ++ ){
+            if(images[i] === null){
+                continue;
+            }
             const playerId = playerIds[i];
             const image = images[i]
             const timestamp = new Date().getTime();
             const randomString = Math.random().toString(36).substring(2, 8);
             const hashString = playerId + '_' + timestamp +  randomString;
-            console.log('name',hashString);
-            console.log('Uploading image...,',playerId);
             const url = await uploadFile(`profile_pictures`,image,hashString);
             console.log('url',url);
             const updateForm = {
                 photo: url
             };
-            await databaseWrapper.update("player", "_id", playerId, updateForm);
+
+            
+            const isSuccess = await databaseWrapper.updateWithoutReturn("player", "_id", playerId, updateForm);
+            if(!isSuccess) {
+                return res.status(400).send({msg:'internal server error'});
+            }
+            
+        }
+
+        if(!slip){
+            return res.status(200).send({message: 'photo uploaded successfully'});
         }
         
-        return res.status(200).send({message: 'photo uploaded successfully'});
+        const slipTimestamp = new Date().getTime();
+        const slipRandomString = Math.random().toString(36).substring(2, 8);
+        const slipHashString = companyId + '_' + slipTimestamp +  slipRandomString;
+        const slipUrl = await uploadFile('payment_slips',slip,slipHashString)
+        const slipUpdate = await databaseWrapper.updateWithoutReturn("company", "_id", companyId, {paymentSlip: slipUrl});
+        if(!slipUpdate) {
+            return res.status(400).send({msg:'internal server error'});
+        }else{
+            return res.status(200).send({message: 'photo uploaded successfully'});
+        }   
     }catch(e){
+        console.log('error',e);
         return res.status(400).send({msg:'internal server error', error: e.message});
     }
        
